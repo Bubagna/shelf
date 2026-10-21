@@ -5,97 +5,112 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<!-- the page draws under the status bar: dark wood up there, white icons on it -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Shelf">
-<meta name="theme-color" id="themeColor" content="#e9ede3" media="(prefers-color-scheme: light)">
-<meta name="theme-color" id="themeColorDark" content="#161b17" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" id="themeColor" content="#2b190e">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <title>Shelf</title>
 <style>
 /* ==========================================================================
-   Shelf — the same lab paper as EPFL Focus: pale green ground with a
-   millimetre grid, dark green ink, and one brick-red accent for the books.
+   Shelf — an old wooden library: walnut boards behind, books standing on
+   planks, parchment pages for everything you read, brass and oxblood
+   leather for what you press.
    ========================================================================== */
 @font-face{
-  font-family:'Fraunces';font-style:normal;font-weight:400 700;font-display:swap;
-  src:url('fonts/fraunces-latin.woff2') format('woff2');
+  font-family:'Garamond';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url('fonts/garamond-latin.woff2') format('woff2');
 }
 @font-face{
-  font-family:'Karla';font-style:normal;font-weight:400 700;font-display:swap;
-  src:url('fonts/karla-latin.woff2') format('woff2');
+  font-family:'Garamond';font-style:italic;font-weight:400 700;font-display:swap;
+  src:url('fonts/garamond-italic-latin.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Fell';font-style:normal;font-weight:400;font-display:swap;
+  src:url('fonts/fell-latin.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Fell';font-style:italic;font-weight:400;font-display:swap;
+  src:url('fonts/fell-italic-latin.woff2') format('woff2');
 }
 
 :root{
-  --paper:#e9ede3;
-  --card:#f4f7ef;
-  --well:#dee5d5;
-  --line:#ccd6c2;
-  --grid:rgba(53,84,55,.055);
-  --ink:#1e2a21;
-  --ink-2:#54655a;
-  --ink-3:#87968a;
-  --acc:#9a4535;
-  --on-acc:#ffffff;
-  --bad:#bf534e;
-  --shadow:0 1px 0 rgba(30,42,33,.05), 0 6px 18px -10px rgba(30,42,33,.35);
-  --book:0 1px 2px rgba(30,42,33,.18), 0 10px 22px -12px rgba(30,42,33,.55);
-  --r:14px;
-  --fd:'Fraunces', Georgia, 'Times New Roman', serif;
-  --fs:'Karla', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --wood:#5a3720; --wood-deep:#2b190e;
+  --plank-1:#9a6a40; --plank-2:#6e4527; --plank-3:#40250f;
+  --cream:#f4e7c8; --cream-2:#d9c49b; --cream-3:#a78c66;
+  --paper:#f2e6cb; --paper-2:#e6d5ae; --line:#cbb184;
+  --ink:#2a1a0f; --ink-2:#5c4330; --ink-3:#8b7052;
+  --acc:#7d221b; --acc-2:#5c1712; --gold:#e8c873;
+  --brass-1:#e6c873; --brass-2:#a9822f; --on-brass:#33200c;
+  --bad:#9d2a20;
+  --field:rgba(255,250,235,.45);
+  --shadow:0 12px 26px -12px rgba(0,0,0,.75);
+  --book:0 1px 2px rgba(0,0,0,.35), 0 10px 18px -8px rgba(0,0,0,.7);
+  --fd:'Fell', 'Iowan Old Style', Georgia, serif;
+  --fs:'Garamond', 'Iowan Old Style', Georgia, serif;
+  /* Fell only has old-style figures, where 10 reads as IO: numbers use Garamond */
+  --fn:'Garamond', Georgia, serif;
+  /* vertical grain for the back boards, horizontal for the planks */
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='720'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55 0.009' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.05 0 0 0 0 0.02 0 0 0 0.75 -0.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --grain-h:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='60'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.45' numOctaves='3' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.12 0 0 0 0 0.06 0 0 0 0 0.02 0 0 0 0.7 -0.1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --fibre:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.24 0 0 0 0 0.10 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
 }
+/* candlelight: the room goes dark, the pages turn to old leather */
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --paper:#161b17; --card:#1e251f; --well:#131813; --line:#2e372f;
-    --grid:rgba(174,214,178,.05);
-    --ink:#e7eee5; --ink-2:#a3b1a5; --ink-3:#76857a;
-    --acc:#e2937c; --on-acc:#1c1310; --bad:#d97b76;
-    --shadow:0 1px 0 rgba(0,0,0,.2), 0 8px 22px -12px rgba(0,0,0,.7);
-    --book:0 1px 2px rgba(0,0,0,.4), 0 12px 24px -12px rgba(0,0,0,.9);
+    --wood:#3a2314; --wood-deep:#160c06;
+    --plank-1:#73502f; --plank-2:#4c311b; --plank-3:#28170a;
+    --paper:#2b1f15; --paper-2:#21170f; --line:#4b3826;
+    --ink:#efe1c1; --ink-2:#c8b08a; --ink-3:#8f7858;
+    --acc:#a33a2d; --acc-2:#76251b;
+    --brass-1:#cfae5c; --brass-2:#8a6a26;
+    --bad:#d77a6c;
+    --field:rgba(0,0,0,.25);
   }
 }
 :root[data-theme="dark"]{
-  --paper:#161b17; --card:#1e251f; --well:#131813; --line:#2e372f;
-  --grid:rgba(174,214,178,.05);
-  --ink:#e7eee5; --ink-2:#a3b1a5; --ink-3:#76857a;
-  --acc:#e2937c; --on-acc:#1c1310; --bad:#d97b76;
-  --shadow:0 1px 0 rgba(0,0,0,.2), 0 8px 22px -12px rgba(0,0,0,.7);
-  --book:0 1px 2px rgba(0,0,0,.4), 0 12px 24px -12px rgba(0,0,0,.9);
+  --wood:#3a2314; --wood-deep:#160c06;
+  --plank-1:#73502f; --plank-2:#4c311b; --plank-3:#28170a;
+  --paper:#2b1f15; --paper-2:#21170f; --line:#4b3826;
+  --ink:#efe1c1; --ink-2:#c8b08a; --ink-3:#8f7858;
+  --acc:#a33a2d; --acc-2:#76251b;
+  --brass-1:#cfae5c; --brass-2:#8a6a26;
+  --bad:#d77a6c;
+  --field:rgba(0,0,0,.25);
 }
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;min-height:100%}
-html{background-color:#e9ede3}
-@media (prefers-color-scheme:dark){html:not([data-theme="light"]){background-color:#161b17}}
-html[data-theme="dark"]{background-color:#161b17}
-html[data-theme="light"]{background-color:#e9ede3}
+html{background-color:#2b190e}
 body{
-  background-color:var(--paper);
+  background-color:var(--wood);
   background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size:22px 22px;
-  color:var(--ink);
-  font-family:var(--fs);font-size:15px;line-height:1.45;
+    radial-gradient(ellipse 120% 70% at 50% 35%, transparent 40%, rgba(0,0,0,.45)),
+    repeating-linear-gradient(90deg, transparent 0 calc(25% - 2px), rgba(0,0,0,.32) calc(25% - 2px) calc(25% - 1px), rgba(255,220,170,.06) calc(25% - 1px) 25%),
+    var(--grain);
+  color:var(--cream);
+  font-family:var(--fs);font-size:17px;line-height:1.45;
   -webkit-font-smoothing:antialiased;
   -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
   overscroll-behavior:none;
 }
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
 [hidden]{display:none!important}
-:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:6px}
+:focus-visible{outline:2px solid var(--brass-1);outline-offset:3px;border-radius:6px}
 input,textarea{-webkit-user-select:text;user-select:text}
+.num, .tab{font-variant-numeric:lining-nums tabular-nums}
 
 #app{
   display:flex;flex-direction:column;height:100dvh;
-  max-width:520px;margin:0 auto;padding-inline:20px;
-  padding-top:calc(env(safe-area-inset-top) + 10px);
-  padding-bottom:calc(env(safe-area-inset-bottom) + 10px);
+  max-width:520px;margin:0 auto;padding-inline:18px;
+  padding-top:calc(env(safe-area-inset-top) + 8px);
+  padding-bottom:calc(env(safe-area-inset-bottom) + 8px);
 }
 main{flex:1;display:flex;flex-direction:column;min-height:0}
 .view{display:none;flex:1;flex-direction:column;min-height:0;
   overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
-  margin-inline:-20px;padding-inline:20px}
+  margin-inline:-18px;padding-inline:18px;padding-bottom:8px}
 .view.on{display:flex}
 .view > *{flex:none}
 
@@ -110,299 +125,330 @@ main{flex:1;display:flex;flex-direction:column;min-height:0}
 .bump{animation:bump .24s ease-out}
 @keyframes bump{from{opacity:.2;transform:scale(.95)}to{opacity:1;transform:none}}
 
+/* ---------------- materials ---------------- */
+.brass{background:linear-gradient(180deg, var(--brass-1), var(--brass-2));color:var(--on-brass);
+  border:1px solid rgba(60,36,10,.6);
+  box-shadow:inset 0 1px 0 rgba(255,245,210,.55), inset 0 -1px 0 rgba(0,0,0,.2), 0 2px 5px rgba(0,0,0,.55)}
+.page{position:relative;background-color:var(--paper);color:var(--ink);
+  background-image:radial-gradient(ellipse at 50% 40%, transparent 55%, rgba(110,70,25,.16)), var(--fibre);
+  border:1px solid var(--line);border-radius:5px;padding:18px 16px;box-shadow:var(--shadow)}
+.ornament{text-align:center;color:var(--ink-3);font-size:15px;letter-spacing:.6em;margin:18px 0 14px;padding-left:.6em}
+
 /* ---------------- top bar ---------------- */
-.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;min-height:38px}
-.bar > :first-child, .bar > :last-child{flex:none;min-width:38px}
-.count{display:flex;align-items:center;gap:7px;padding:6px 13px 6px 10px;
-  background:var(--card);border:1px solid var(--line);border-radius:999px;
-  font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
-.count svg{width:16px;height:16px;flex:none;color:var(--acc)}
-.icobtn{width:38px;height:38px;border-radius:999px;display:grid;place-items:center;
-  background:var(--card);border:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;min-height:40px}
+.bar > :first-child, .bar > :last-child{flex:none;min-width:40px}
+.count{display:flex;align-items:center;gap:7px;height:38px;padding:0 13px 0 10px;border-radius:5px;
+  font-size:16px;font-weight:700}
+.count svg{width:16px;height:16px;flex:none}
+.icobtn{width:40px;height:40px;border-radius:999px;display:grid;place-items:center}
 .icobtn svg{width:19px;height:19px}
-.title{font-family:var(--fd);font-size:18px;font-weight:600;
-  font-variation-settings:'SOFT' 40,'WONK' 1;letter-spacing:-.01em;
+.title{font-family:var(--fd);font-size:24px;color:var(--cream);letter-spacing:.01em;
+  text-shadow:0 2px 3px rgba(0,0,0,.6);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 
 /* ---------------- covers ---------------- */
-.cov{position:relative;aspect-ratio:2/3;border-radius:4px 7px 7px 4px;overflow:hidden;
-  background:var(--well);box-shadow:var(--book)}
+.cov{position:relative;aspect-ratio:2/3;border-radius:2px 4px 4px 2px;overflow:hidden;
+  background:#3b2a1d;box-shadow:var(--book)}
 .cov img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-/* a spine shadow on the left edge, so a flat jpeg reads as a book */
+/* a spine crease on the left edge, so a flat jpeg reads as a bound book */
 .cov::after{content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(90deg, rgba(0,0,0,.18), rgba(255,255,255,.12) 3%, transparent 7%)}
-.ph{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;
-  padding:12% 10% 10%;color:#f6f1e7;text-align:left}
-.ph b{font-family:var(--fd);font-weight:600;font-size:var(--phs,13px);line-height:1.12;
-  font-variation-settings:'SOFT' 60,'WONK' 1;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
-.ph small{font-size:calc(var(--phs,13px) * .72);opacity:.8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ph::before{content:'';position:absolute;left:10%;right:10%;top:7%;height:1px;background:rgba(255,255,255,.35)}
+  background:linear-gradient(90deg, rgba(0,0,0,.35), rgba(255,240,210,.14) 3.5%, rgba(0,0,0,.08) 6%, transparent 9%)}
+/* no cover: a leather binding, gold-tooled */
+.ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8%;
+  padding:14% 11%;color:var(--gold);text-align:center;
+  box-shadow:inset 0 0 0 calc(var(--phs,13px) * .35) rgba(0,0,0,.12), inset 0 0 0 calc(var(--phs,13px) * .42) rgba(232,200,115,.55);
+  background-image:var(--fibre)}
+.ph b{font-family:var(--fd);font-weight:400;font-size:var(--phs,13px);line-height:1.12;
+  display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.ph small{font-family:var(--fs);font-style:italic;font-size:calc(var(--phs,13px) * .72);opacity:.85;max-width:100%;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.seal{position:absolute;right:5px;bottom:6px;z-index:2;width:30px;height:30px;border-radius:52% 48% 50% 47%;
+  display:grid;place-items:center;font-family:var(--fn);font-weight:600;font-size:15px;color:#f3d9a0;
+  background:radial-gradient(circle at 35% 30%, #c0463a, #85211a 58%, #5c140f);
+  box-shadow:0 2px 4px rgba(0,0,0,.6), inset 0 0 0 2px rgba(0,0,0,.18), inset 0 0 0 4px rgba(255,200,170,.12)}
 
-/* ---------------- shelf ---------------- */
-.hero{display:flex;align-items:baseline;gap:10px}
-.hero .v{font-family:var(--fd);font-size:46px;font-weight:600;line-height:1;
-  font-variation-settings:'SOFT' 70,'WONK' 1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.hero .u{font-size:13px;color:var(--ink-3)}
-.herosub{font-size:12.5px;color:var(--ink-3);margin-top:6px}
-.herosub b{color:var(--ink-2);font-variant-numeric:tabular-nums}
+/* ---------------- shelves ---------------- */
+.hero{display:flex;align-items:baseline;gap:10px;margin-top:2px}
+.hero .v{font-family:var(--fn);font-weight:500;font-size:58px;line-height:1;color:var(--gold);text-shadow:0 2px 4px rgba(0,0,0,.6)}
+.hero .u{font-family:var(--fs);font-style:italic;font-size:18px;color:var(--cream-2)}
+.herosub{font-size:15px;color:var(--cream-3);margin-top:4px}
+.herosub b{color:var(--cream);font-weight:600}
 .goal{margin-top:12px}
-.goal .gl{display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink-3);margin-bottom:5px}
-.goal .gl b{color:var(--ink-2);font-variant-numeric:tabular-nums}
-.pbar{height:9px;background:var(--well);border-radius:999px;overflow:hidden}
-.pbar i{display:block;height:100%;background:var(--acc);border-radius:999px}
+.goal .gl{display:flex;justify-content:space-between;font-size:14px;color:var(--cream-3);margin-bottom:5px}
+.goal .gl b{color:var(--cream)}
+.pbar{height:8px;background:rgba(0,0,0,.4);border-radius:999px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.6)}
+.pbar i{display:block;height:100%;background:linear-gradient(var(--brass-1), var(--brass-2));border-radius:999px}
 
 .tools{display:flex;gap:8px;margin:18px 0 12px;align-items:center}
-.filter{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:0 12px;height:38px;
-  background:var(--card);border:1px solid var(--line);border-radius:999px;color:var(--ink-3)}
+.filter{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:0 13px;height:40px;
+  background:var(--paper);background-image:var(--fibre);border:1px solid var(--line);border-radius:5px;color:var(--ink-3);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.18)}
 .filter svg{width:16px;height:16px;flex:none}
-.filter input{flex:1;min-width:0;border:0;background:none;color:var(--ink);font:inherit;font-size:16px;outline:none;padding:0}
-.filter input::placeholder{color:var(--ink-3)}
-.scope{display:flex;gap:3px;padding:3px;background:var(--well);border-radius:999px;margin-bottom:16px}
-.scope button{flex:1;padding:8px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-3)}
-.scope button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+.filter input{flex:1;min-width:0;border:0;background:none;color:var(--ink);font:inherit;font-size:16.5px;outline:none;padding:0}
+.filter input::placeholder{color:var(--ink-3);font-style:italic}
+.scope{display:flex;gap:3px;padding:3px;background:rgba(0,0,0,.38);border-radius:6px;margin-bottom:18px;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.6), 0 1px 0 rgba(255,220,170,.08)}
+.scope button{flex:1;padding:7px 6px;border-radius:4px;font-size:15.5px;color:var(--cream-2)}
+.scope button[aria-selected="true"]{background:linear-gradient(180deg, var(--brass-1), var(--brass-2));color:var(--on-brass);font-weight:600;
+  box-shadow:inset 0 1px 0 rgba(255,245,210,.5), 0 1px 3px rgba(0,0,0,.5)}
 
-.yearh{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px;font-weight:700;color:var(--ink-3);
-  margin:6px 0 12px;letter-spacing:.05em;text-transform:uppercase}
-.yearh span:last-child{letter-spacing:0;text-transform:none;font-weight:600}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 14px;margin-bottom:28px;align-items:start}
-.tile .ph small{padding-right:22px}
-.tile{min-width:0;text-align:left;display:block}
-.tile .cov{--phs:12px}
-.tile .t{font-size:12.5px;font-weight:700;line-height:1.25;margin-top:8px;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.tile .a{font-size:11px;color:var(--ink-3);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.badge{position:absolute;right:5px;bottom:5px;z-index:2;min-width:24px;height:24px;padding:0 6px;border-radius:999px;
-  display:grid;place-items:center;background:var(--card);color:var(--ink);font-size:12px;font-weight:700;
-  font-variant-numeric:tabular-nums;box-shadow:0 1px 4px rgba(0,0,0,.25)}
-.badge.top{background:var(--acc);color:var(--on-acc)}
+/* a year is one bay of the bookcase, with a brass plate on top */
+.bay{position:relative;margin:0 -6px 22px;padding:16px 10px 6px;border-radius:3px;
+  background:linear-gradient(180deg, rgba(0,0,0,.42), rgba(0,0,0,.18) 30%, rgba(0,0,0,.28));
+  box-shadow:inset 0 10px 18px -8px rgba(0,0,0,.8), inset 6px 0 10px -6px rgba(0,0,0,.6), inset -6px 0 10px -6px rgba(0,0,0,.6),
+    0 0 0 5px rgba(60,35,18,.65), 0 0 0 6px rgba(0,0,0,.35)}
+.plate{display:flex;justify-content:center;margin:2px 0 16px}
+.plate span{position:relative;padding:3px 22px 2px;border-radius:2px;font-family:var(--fn);font-weight:600;font-size:17px;letter-spacing:.06em;font-variant-numeric:lining-nums}
+.plate span::before,.plate span::after{content:'';position:absolute;top:50%;width:5px;height:5px;margin-top:-2.5px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%, #fff2c8, #8a6a26 70%);box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.plate span::before{left:7px}.plate span::after{right:7px}
+.plate small{font-family:var(--fs);font-style:italic;font-size:13px;letter-spacing:0;opacity:.75;margin-left:6px}
+.srow{margin-bottom:16px}
+.books{display:grid;grid-template-columns:repeat(3,1fr);gap:0 14px;align-items:end;padding:0 4px}
+.spine{display:block;margin:0 auto;width:100%;position:relative;z-index:1}
+.spine .cov{--phs:12px}
+.plank{position:relative;height:15px;margin:0 -10px;border-radius:2px;
+  background:var(--grain-h), linear-gradient(180deg, var(--plank-1) 0 4px, var(--plank-2) 4px 60%, var(--plank-3));
+  box-shadow:inset 0 1px 0 rgba(255,225,180,.3), 0 12px 14px -6px rgba(0,0,0,.85)}
+.labels{display:grid;grid-template-columns:repeat(3,1fr);gap:0 14px;padding:8px 4px 0}
+.lab{text-align:center;min-width:0;display:block}
+.lab .t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  font-size:14.5px;line-height:1.2;color:var(--cream);font-weight:600}
+.lab .a{display:block;font-size:12.5px;font-style:italic;color:var(--cream-3);margin-top:2px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-.rows{margin-bottom:26px}
-.row{display:flex;width:100%;gap:13px;align-items:center;text-align:left;padding:10px 0;border-top:1px solid var(--line)}
-.row:first-child{border-top:0}
-.row .cov{width:46px;flex:none;--phs:7px;box-shadow:0 1px 2px rgba(30,42,33,.2)}
+/* the list is a catalogue page */
+.rows{padding:4px 14px;margin-bottom:22px}
+.yearh{font-family:var(--fn);font-weight:600;font-size:20px;color:var(--ink);display:flex;justify-content:space-between;align-items:baseline;
+  padding:12px 0 4px;border-bottom:1px solid var(--line)}
+.yearh small{font-family:var(--fs);font-style:italic;font-size:14px;color:var(--ink-3)}
+.row{display:flex;width:100%;gap:13px;align-items:center;text-align:left;padding:11px 0;border-top:1px dashed var(--line)}
+.yearh + .row, .row:first-child{border-top:0}
+.row .cov{width:46px;flex:none;--phs:7px;box-shadow:0 1px 3px rgba(0,0,0,.35)}
 .row .body{flex:1;min-width:0}
-.row .t{font-size:14px;font-weight:700;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.row .a{font-size:12px;color:var(--ink-2);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.row .d{font-size:11px;color:var(--ink-3);margin-top:3px}
-.row .r{font-family:var(--fd);font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;flex:none;
-  font-variation-settings:'SOFT' 70,'WONK' 1}
-.row .r small{font-family:var(--fs);font-size:11px;color:var(--ink-3);font-weight:500}
+.row .t{font-size:17px;font-weight:600;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .a{font-size:15px;font-style:italic;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .d{font-size:13.5px;color:var(--ink-3);margin-top:1px}
+.row .r{font-family:var(--fn);font-weight:500;font-size:26px;flex:none;color:var(--acc)}
+.row .r small{font-family:var(--fs);font-size:13px;color:var(--ink-3)}
 
-.empty{color:var(--ink-3);font-size:13.5px;text-align:center;padding:50px 20px;line-height:1.7}
-.empty b{color:var(--ink-2)}
+.empty{color:var(--cream-2);font-size:17px;font-style:italic;text-align:center;padding:46px 20px 24px;line-height:1.6}
+.empty b{color:var(--cream);font-style:normal}
+.onwood{width:100%;margin-top:4px;padding:12px;border-radius:6px;border:1px dashed rgba(244,231,200,.4);
+  color:var(--cream-2);font-size:16px;font-style:italic}
 
 /* ---------------- find ---------------- */
-.searchbox{display:flex;align-items:center;gap:10px;padding:0 6px 0 14px;height:50px;
-  background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);color:var(--ink-3)}
-.searchbox:focus-within{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc)}
+.searchbox{display:flex;align-items:center;gap:10px;padding:0 6px 0 14px;height:52px;
+  background:var(--paper);background-image:var(--fibre);border:1px solid var(--line);border-radius:6px;color:var(--ink-3);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.2), 0 6px 14px -8px rgba(0,0,0,.7)}
+.searchbox:focus-within{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc), 0 6px 14px -8px rgba(0,0,0,.7)}
 .searchbox svg{width:19px;height:19px;flex:none}
-.searchbox input{flex:1;min-width:0;border:0;background:none;color:var(--ink);font:inherit;font-size:16.5px;outline:none;padding:0}
-.searchbox input::placeholder{color:var(--ink-3)}
+.searchbox input{flex:1;min-width:0;border:0;background:none;color:var(--ink);font:inherit;font-size:18px;outline:none;padding:0}
+.searchbox input::placeholder{color:var(--ink-3);font-style:italic}
 .searchbox input::-webkit-search-cancel-button{display:none}
 .qx{width:34px;height:34px;border-radius:999px;display:grid;place-items:center;font-size:13px;color:var(--ink-3)}
-.findmeta{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:var(--ink-3);margin:14px 0 4px;min-height:18px}
-.spin{width:14px;height:14px;border-radius:999px;border:2px solid var(--line);border-top-color:var(--acc);animation:spin .8s linear infinite;display:inline-block;vertical-align:-2px;margin-right:6px}
+.target{margin:12px 0 0}
+.findmeta{display:flex;justify-content:space-between;align-items:center;font-size:14.5px;font-style:italic;color:var(--cream-3);margin:12px 2px 8px;min-height:20px}
+.spin{width:14px;height:14px;border-radius:999px;border:2px solid rgba(244,231,200,.25);border-top-color:var(--gold);animation:spin .8s linear infinite;display:inline-block;vertical-align:-2px;margin-right:7px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.hit{display:flex;width:100%;gap:13px;align-items:flex-start;text-align:left;padding:12px 0;border-top:1px solid var(--line)}
+.hits{padding:2px 14px}
+.hit{display:flex;width:100%;gap:13px;align-items:flex-start;text-align:left;padding:12px 0;border-top:1px dashed var(--line)}
 .hit:first-child{border-top:0}
 .hit .cov{width:54px;flex:none;--phs:8px}
-.hit .body{flex:1;min-width:0;padding-top:2px}
-.hit .t{font-size:14.5px;font-weight:700;line-height:1.28;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.hit .a{font-size:12.5px;color:var(--ink-2);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hit .body{flex:1;min-width:0;padding-top:1px}
+.hit .t{font-size:17.5px;font-weight:600;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hit .a{font-size:15px;font-style:italic;color:var(--ink-2);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hit .m{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
-.tag{font-size:10.5px;color:var(--ink-2);background:var(--well);border-radius:999px;padding:3px 8px;white-space:nowrap}
-.tag.acc{background:transparent;color:var(--acc);border:1px solid var(--acc);padding:2px 7px;font-weight:700}
-.skel{display:flex;gap:13px;padding:12px 0;border-top:1px solid var(--line)}
+.tag{font-size:13px;color:var(--ink-2);background:var(--paper-2);border:1px solid var(--line);border-radius:3px;padding:1px 7px;white-space:nowrap}
+.tag.acc{color:var(--acc);border-color:var(--acc);background:transparent;font-weight:600}
+.skel{display:flex;gap:13px;padding:12px 0;border-top:1px dashed var(--line);animation:pulse 1.3s ease-in-out infinite}
 .skel:first-child{border-top:0}
-.skel i{display:block;width:54px;aspect-ratio:2/3;border-radius:4px;background:var(--well)}
+.skel i{display:block;width:54px;aspect-ratio:2/3;border-radius:2px;background:var(--paper-2)}
 .skel div{flex:1;padding-top:4px}
-.skel b{display:block;height:11px;border-radius:6px;background:var(--well);margin-bottom:9px}
+.skel b{display:block;height:12px;border-radius:3px;background:var(--paper-2);margin-bottom:9px}
 .skel b:nth-child(2){width:55%}
 .skel b:nth-child(3){width:30%}
-.skel{animation:pulse 1.3s ease-in-out infinite}
 @keyframes pulse{50%{opacity:.55}}
-.manual{width:100%;margin-top:18px;padding:14px;border-radius:var(--r);border:1px dashed var(--line);
-  color:var(--ink-2);font-size:13.5px;font-weight:700;background:transparent}
-.tips{font-size:12.5px;color:var(--ink-3);line-height:1.7;margin-top:22px}
-.tips b{color:var(--ink-2)}
+.manual{width:100%;margin:14px 0 4px;padding:12px;border-radius:5px;border:1px dashed var(--line);
+  color:var(--ink-2);font-size:16px;font-style:italic;background:transparent}
+.tips{font-size:16px;color:var(--ink-2);line-height:1.6}
+.tips b{color:var(--ink);font-weight:600}
 
 /* ---------------- form ---------------- */
-.covedit{display:flex;gap:16px;align-items:flex-end;margin:4px 0 22px}
-.covedit .cov{width:112px;flex:none;--phs:14px}
+.covedit{display:flex;gap:16px;align-items:flex-end;margin:0 0 18px}
+.covedit .cov{width:108px;flex:none;--phs:14px}
 .covedit .side{flex:1;min-width:0}
-.covedit .t{font-family:var(--fd);font-size:19px;font-weight:600;line-height:1.2;
-  font-variation-settings:'SOFT' 50,'WONK' 1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.covedit .a{font-size:13px;color:var(--ink-2);margin-top:4px}
+.covedit .t{font-family:var(--fd);font-size:23px;line-height:1.15;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.covedit .a{font-size:16px;font-style:italic;color:var(--ink-2);margin-top:4px}
 .covedit .mini{margin-top:12px}
 .field{margin-bottom:14px}
-.field label, .flabel{display:block;font-size:11.5px;font-weight:700;color:var(--ink-2);margin-bottom:5px}
-.field label small{font-weight:400;color:var(--ink-3)}
-.field input, .field textarea{width:100%;padding:12px 13px;border-radius:10px;border:1px solid var(--line);
-  background:var(--card);color:var(--ink);font-family:var(--fs);font-size:16px;line-height:1.45;
-  -webkit-appearance:none;appearance:none;min-height:46px}
+.field label, .flabel{display:block;font-size:14px;font-variant:small-caps;letter-spacing:.06em;font-weight:600;color:var(--ink-2);margin-bottom:4px;text-transform:lowercase}
+.field label small{font-weight:400;color:var(--ink-3);font-style:italic;font-variant:normal;letter-spacing:0;text-transform:none}
+.field input, .field textarea{width:100%;padding:10px 12px;border-radius:4px;border:1px solid var(--line);
+  background:var(--field);color:var(--ink);font-family:var(--fs);font-size:17px;line-height:1.4;
+  -webkit-appearance:none;appearance:none;min-height:46px;box-shadow:inset 0 1px 2px rgba(0,0,0,.08)}
 .field textarea{resize:vertical;min-height:92px}
-.field input:focus, .field textarea:focus{outline:2px solid var(--acc);outline-offset:1px}
+.field input::placeholder, .field textarea::placeholder{color:var(--ink-3);font-style:italic}
+.field input:focus, .field textarea:focus{outline:2px solid var(--acc);outline-offset:0}
 .field input[type="date"]{display:block;text-align:left}
 .field input::-webkit-date-and-time-value{text-align:left}
-.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.field input{min-width:0;max-width:100%}
 .field.bad input{border-color:var(--bad)}
 
-.rate{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 14px 16px;margin-bottom:14px}
-.rate.bad{border-color:var(--bad)}
-.rate .top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px}
-.rate .num{font-family:var(--fd);font-size:40px;font-weight:600;line-height:1;letter-spacing:-.02em;
-  font-variation-settings:'SOFT' 70,'WONK' 1,'opsz' 90;font-variant-numeric:tabular-nums}
-.rate .num small{font-family:var(--fs);font-size:13px;color:var(--ink-3);font-weight:500;margin-left:3px}
-.rate .num.none{color:var(--ink-3)}
-.rate .word{font-size:13px;font-weight:700;color:var(--acc)}
+.rate{border:1px solid var(--line);border-radius:5px;padding:12px 12px 14px;margin-bottom:16px;background:var(--field)}
+.rate.bad{border-color:var(--bad);box-shadow:0 0 0 1px var(--bad)}
+.rate .top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.rate .n{font-family:var(--fn);font-weight:500;font-size:44px;line-height:1;color:var(--acc)}
+.rate .n small{font-family:var(--fs);font-size:15px;color:var(--ink-3);margin-left:3px}
+.rate .n.none{color:var(--ink-3)}
+.rate .word{font-size:18px;font-style:italic;color:var(--ink-2)}
 .segs{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;touch-action:none;padding:6px 0;margin:-6px 0}
-.segs button{height:34px;border-radius:7px;background:var(--well);font-size:11.5px;font-weight:700;color:var(--ink-3);
-  font-variant-numeric:tabular-nums;transition:background .12s, color .12s}
-.segs button.on{background:var(--acc);color:var(--on-acc)}
+.segs button{height:34px;border-radius:3px;background:var(--paper-2);border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--ink-3);
+  font-variant-numeric:lining-nums;transition:background .12s, color .12s}
+.segs button.on{background:linear-gradient(180deg, var(--acc), var(--acc-2));border-color:var(--acc-2);color:var(--gold)}
 
-.seg{display:flex;gap:3px;padding:3px;background:var(--well);border-radius:999px}
-.seg button{flex:1;padding:9px 4px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-3)}
-.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+.seg{display:flex;gap:3px;padding:3px;background:var(--paper-2);border:1px solid var(--line);border-radius:5px}
+.seg button{flex:1;padding:7px 4px;border-radius:3px;font-size:15.5px;color:var(--ink-3)}
+.seg button[aria-pressed="true"]{background:var(--paper);color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.target.seg{background:rgba(0,0,0,.38);border-color:rgba(0,0,0,.4);box-shadow:inset 0 1px 3px rgba(0,0,0,.6)}
+.target.seg button{color:var(--cream-2)}
+.target.seg button[aria-pressed="true"]{background:linear-gradient(180deg, var(--brass-1), var(--brass-2));color:var(--on-brass)}
 
-details.more{margin:6px 0 14px;border-top:1px solid var(--line);padding-top:12px}
-details.more summary{list-style:none;font-size:13px;font-weight:700;color:var(--ink-2);cursor:pointer;padding:4px 0 12px}
+details.more{margin:6px 0 4px;border-top:1px solid var(--line);padding-top:10px}
+details.more summary{list-style:none;font-family:var(--fd);font-size:18px;color:var(--ink-2);cursor:pointer;padding:4px 0 12px}
 details.more summary::-webkit-details-marker{display:none}
-details.more summary::after{content:' ▾';color:var(--ink-3);font-size:11px}
+details.more summary::after{content:' ▾';color:var(--ink-3);font-size:12px}
 details.more[open] summary::after{content:' ▴'}
-.savebar{position:sticky;bottom:0;margin-top:auto;padding:12px 0 2px;
-  background:linear-gradient(transparent, var(--paper) 30%)}
-.primary{width:100%;padding:16px;border-radius:var(--r);background:var(--acc);color:var(--on-acc);
-  font-size:16px;font-weight:700;box-shadow:var(--shadow)}
-.primary:disabled{background:var(--well);color:var(--ink-3);box-shadow:none}
+.savebar{position:sticky;bottom:0;margin-top:auto;padding:14px 0 2px}
+.primary{width:100%;padding:15px;border-radius:5px;font-family:var(--fd);font-size:20px;letter-spacing:.02em;color:var(--gold);
+  background:linear-gradient(180deg, #93302a, var(--acc) 40%, var(--acc-2));
+  border:1px solid rgba(0,0,0,.45);
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,.12), inset 0 0 0 4px rgba(232,200,115,.45), 0 8px 16px -6px rgba(0,0,0,.8);
+  text-shadow:0 1px 1px rgba(0,0,0,.5)}
+.primary:disabled{opacity:.6}
 
 /* ---------------- book ---------------- */
-.bhead{text-align:center;padding-top:6px}
-.bhead .cov{width:150px;margin:0 auto;--phs:17px}
-.bhead h1{font-family:var(--fd);font-size:25px;font-weight:600;line-height:1.15;letter-spacing:-.015em;
-  font-variation-settings:'SOFT' 50,'WONK' 1;margin:20px 0 5px}
-.bhead .a{font-size:14px;color:var(--ink-2)}
-.score{display:flex;align-items:center;gap:14px;margin:22px 0 0;padding:14px 16px;
-  background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
-.score .num{font-family:var(--fd);font-size:44px;font-weight:600;line-height:1;letter-spacing:-.03em;
-  font-variation-settings:'SOFT' 70,'WONK' 1,'opsz' 90;font-variant-numeric:tabular-nums;color:var(--acc)}
-.score .num small{font-family:var(--fs);font-size:13px;color:var(--ink-3);font-weight:500;margin-left:2px}
+.bhead{text-align:center;padding-top:4px}
+.stand{position:relative;width:170px;margin:0 auto}
+.stand .cov{width:148px;margin:0 auto;--phs:17px}
+.stand .plank{margin:0 -8px}
+.bhead h1{font-family:var(--fd);font-weight:400;font-size:30px;line-height:1.12;color:var(--cream);
+  text-shadow:0 2px 4px rgba(0,0,0,.6);margin:22px 0 4px}
+.bhead .a{font-size:18px;font-style:italic;color:var(--cream-2)}
+.bhead .status{display:inline-block;margin-top:10px;padding:2px 12px;border-radius:3px;font-size:14px;font-variant:small-caps;letter-spacing:.08em}
+.bpage{margin-top:22px}
+.score{display:flex;align-items:center;gap:16px}
+.score .n{font-family:var(--fn);font-weight:500;font-size:52px;line-height:1;color:var(--acc)}
+.score .n small{font-family:var(--fs);font-size:16px;color:var(--ink-3);margin-left:2px}
 .score .side{flex:1;min-width:0}
-.score .w{font-size:14px;font-weight:700}
-.score .ticks{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;margin-top:8px}
-.score .ticks i{height:6px;border-radius:3px;background:var(--well)}
-.score .ticks i.on{background:var(--acc)}
-.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 0}
-.fact{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 11px;min-width:0}
-.fact .v{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.25;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fact .k{font-size:10.5px;color:var(--ink-3);margin-top:2px}
-.sec{margin-top:24px}
-.sec h3{font-size:11.5px;font-weight:700;color:var(--ink-3);margin:0 0 9px;letter-spacing:.05em;text-transform:uppercase}
-.note{font-size:14.5px;line-height:1.62;color:var(--ink);white-space:pre-wrap;-webkit-user-select:text;user-select:text}
-.quote{position:relative;padding:16px 18px 16px 40px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);
-  font-family:var(--fd);font-size:16px;line-height:1.5;font-style:italic;white-space:pre-wrap;
-  font-variation-settings:'SOFT' 100,'WONK' 1;-webkit-user-select:text;user-select:text}
-.quote::before{content:'“';position:absolute;left:13px;top:4px;font-size:44px;line-height:1;color:var(--acc);font-style:normal}
-.desc{font-size:13.5px;line-height:1.62;color:var(--ink-2);white-space:pre-wrap;-webkit-user-select:text;user-select:text}
+.score .w{font-size:20px;font-style:italic}
+.score .ticks{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-top:8px}
+.score .ticks i{height:9px;transform:rotate(45deg) scale(.7);background:var(--paper-2);border:1px solid var(--line)}
+.score .ticks i.on{background:var(--acc);border-color:var(--acc-2)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 10px}
+.fact{min-width:0}
+.fact .v{font-size:17px;font-weight:600;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-variant-numeric:lining-nums}
+.fact .k{font-size:13px;color:var(--ink-3);font-style:italic}
+.sec{margin-top:4px}
+.sec h3{font-family:var(--fd);font-weight:400;font-size:20px;color:var(--ink);margin:0 0 6px}
+.note{font-size:17.5px;line-height:1.55;white-space:pre-wrap;-webkit-user-select:text;user-select:text}
+.quote{font-family:var(--fd);font-style:italic;font-size:20px;line-height:1.4;white-space:pre-wrap;text-align:center;
+  padding:4px 10px;-webkit-user-select:text;user-select:text}
+.quote::before{content:'“';color:var(--acc)}.quote::after{content:'”';color:var(--acc)}
+.desc{font-size:16px;line-height:1.55;color:var(--ink-2);white-space:pre-wrap;-webkit-user-select:text;user-select:text}
 .desc.clamp{display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden}
-.link{color:var(--acc);font-weight:700;font-size:13px;margin-top:6px}
+.desc::first-letter{font-family:var(--fd);font-size:2.6em;float:left;line-height:.9;margin:4px 6px 0 0;color:var(--acc)}
+.link{color:var(--acc);font-style:italic;font-size:16px;margin-top:6px}
 .tags{display:flex;flex-wrap:wrap;gap:6px}
-.tags .tag{font-size:11.5px;padding:4px 10px}
-.actions{display:flex;gap:10px;margin-top:30px;padding-bottom:6px}
+.actions{display:flex;gap:10px;margin-top:20px;padding-bottom:6px}
 .actions > *{flex:1}
-.ghost{padding:15px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);font-size:14px;font-weight:700}
-.hold{position:relative;overflow:hidden;padding:15px;border-radius:var(--r);background:var(--card);
-  border:1px solid var(--line);font-size:13px;color:var(--bad);font-weight:700;text-align:center;touch-action:none}
-.hold i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--bad);opacity:.22}
+.ghost{padding:13px;border-radius:5px;font-size:17px;font-weight:600}
+.hold{position:relative;overflow:hidden;padding:13px;border-radius:5px;background:rgba(0,0,0,.35);
+  border:1px solid rgba(215,122,108,.45);font-size:16px;color:#e7a596;font-style:italic;text-align:center;touch-action:none}
+.hold i{position:absolute;left:0;top:0;bottom:0;width:0;background:#c0463a;opacity:.4}
 .hold span{position:relative}
-.foot{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);
-  font-size:11.5px;color:var(--ink-3);text-align:center;line-height:1.6}
+.foot{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:14px;font-style:italic;color:var(--ink-3);text-align:center;line-height:1.6}
+.bfoot{text-align:center;font-size:14px;font-style:italic;color:var(--cream-3);margin-top:14px}
 
 /* ---------------- stats ---------------- */
-.period{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.period .label{font-size:14px;font-weight:700}
-.period button{width:34px;height:34px;border-radius:999px;background:var(--card);
-  border:1px solid var(--line);color:var(--ink-2)}
+.period{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.period .label{font-family:var(--fn);font-weight:500;font-size:26px;color:var(--cream);text-shadow:0 2px 3px rgba(0,0,0,.6)}
+.period button{width:38px;height:38px;border-radius:999px;font-size:20px;line-height:1}
 .period button:disabled{opacity:.35}
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 26px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 12px}
-.kpi .v{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2}
-.kpi .k{font-size:11px;color:var(--ink-3);margin-top:2px}
-.chart{margin-bottom:26px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0 18px}
+.kpi{padding:10px 11px;text-align:center}
+.kpi .v{font-family:var(--fn);font-weight:500;font-size:26px;line-height:1.1;color:var(--acc)}
+.kpi .k{font-size:13.5px;color:var(--ink-3);font-style:italic}
+.chart{margin-bottom:16px}
 .chart .cap{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
-.chart .cap .t{font-size:13px;font-weight:700}
-.chart .cap .m{font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.bars{display:flex;align-items:flex-end;gap:3px;height:110px;border-bottom:1px solid var(--line)}
+.chart .cap .t{font-family:var(--fd);font-size:20px}
+.chart .cap .m{font-size:14px;font-style:italic;color:var(--ink-3)}
+.bars{display:flex;align-items:flex-end;gap:3px;height:110px;border-bottom:2px solid var(--ink-3)}
 .bars button{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
-.bars i{display:block;width:100%;background:var(--acc);border-radius:4px 4px 0 0}
+.bars i{display:block;width:100%;background:linear-gradient(180deg, var(--acc), var(--acc-2));border-radius:2px 2px 0 0}
 .bars i.zero{background:var(--line);height:2px!important;border-radius:2px}
-.bars em{font-style:normal;font-size:10px;font-weight:700;color:var(--ink-2);margin-bottom:3px;font-variant-numeric:tabular-nums}
+.bars em{font-style:normal;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:2px;font-variant-numeric:lining-nums}
 .bars button[aria-pressed="true"] i{outline:2px solid var(--ink);outline-offset:1px}
-.axis{display:flex;gap:3px;margin-top:6px}
-.axis span{flex:1;min-width:0;text-align:center;font-size:10px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.readbox{margin-top:12px;padding:10px 13px;background:var(--card);border:1px solid var(--line);
-  border-radius:10px;font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.axis{display:flex;gap:3px;margin-top:5px}
+.axis span{flex:1;min-width:0;text-align:center;font-size:13px;color:var(--ink-3);font-variant-numeric:lining-nums}
+.readbox{margin-top:12px;padding:9px 12px;border:1px dashed var(--line);border-radius:4px;font-size:15.5px;color:var(--ink-2);line-height:1.5}
 .readbox b{color:var(--ink)}
-.split h3{font-size:13px;font-weight:700;margin:0 0 12px}
-.split{margin-bottom:26px}
-.srow{display:flex;align-items:center;gap:9px;margin-bottom:10px}
-.srow .n{font-size:12px;font-weight:700;width:118px;flex:none;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.srow .track2{flex:1;height:9px;background:var(--well);border-radius:999px;overflow:hidden}
-.srow .track2 i{display:block;height:100%;border-radius:999px;background:var(--acc)}
-.srow .v{font-size:11.5px;color:var(--ink-3);width:28px;text-align:right;font-variant-numeric:tabular-nums}
-.best{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.split h3{font-family:var(--fd);font-weight:400;font-size:20px;margin:0 0 12px}
+.srow2{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.srow2 .n{font-size:15px;font-weight:600;width:128px;flex:none;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.srow2 .track2{flex:1;height:8px;background:var(--paper-2);border-radius:999px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.15)}
+.srow2 .track2 i{display:block;height:100%;border-radius:999px;background:var(--acc)}
+.srow2 .v{font-size:15px;color:var(--ink-3);width:24px;text-align:right;font-variant-numeric:lining-nums}
+.gap{height:16px}
 
 /* ---------------- nav ---------------- */
-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:12px;padding:3px;
-  background:var(--well);border-radius:999px;flex:none}
-nav button{padding:10px 2px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--ink-3);
-  display:flex;align-items:center;justify-content:center;gap:5px}
-nav button svg{width:15px;height:15px}
-nav button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:10px;padding:4px;flex:none;
+  border-radius:7px;background:var(--grain-h), linear-gradient(180deg, var(--plank-2), var(--plank-3));
+  box-shadow:inset 0 1px 0 rgba(255,225,180,.25), 0 -6px 14px -8px rgba(0,0,0,.7), 0 0 0 1px rgba(0,0,0,.4)}
+nav button{padding:9px 2px;border-radius:4px;font-size:15.5px;color:var(--cream-2);
+  display:flex;align-items:center;justify-content:center;gap:4px}
+nav button svg{width:14px;height:14px}
+nav button[aria-selected="true"]{background:linear-gradient(180deg, var(--brass-1), var(--brass-2));color:var(--on-brass);font-weight:600;
+  box-shadow:inset 0 1px 0 rgba(255,245,210,.5), 0 1px 3px rgba(0,0,0,.6)}
 
 /* ---------------- sheet ---------------- */
-/* the backdrop deliberately starts below the status bar: iOS paints that strip
-   itself and keeps whatever colour is composited over it */
-.backdrop{position:fixed;left:0;right:0;bottom:0;top:env(safe-area-inset-top);
-  background:rgba(20,30,22,.45);z-index:50;opacity:0;visibility:hidden;
+.backdrop{position:fixed;inset:0;background:rgba(10,5,2,.55);z-index:50;opacity:0;visibility:hidden;
   pointer-events:none;transition:opacity .22s, visibility 0s .22s}
 .backdrop.on{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .22s}
 .sheet{position:fixed;left:0;right:0;bottom:0;z-index:51;max-height:88dvh;overflow-y:auto;
-  background:var(--paper);border-radius:22px 22px 0 0;border-top:1px solid var(--line);
+  border-radius:10px 10px 0 0;border:1px solid var(--line);border-bottom:0;
   padding:8px 20px calc(env(safe-area-inset-bottom) + 24px);
   transform:translateY(102%);transition:transform .26s cubic-bezier(.3,.9,.3,1);
   max-width:520px;margin:0 auto;-webkit-overflow-scrolling:touch}
 .sheet.on{transform:translateY(0)}
-.sheethead{position:sticky;top:0;z-index:2;display:flex;justify-content:flex-end;
-  padding:4px 0 8px;background:var(--paper)}
-.sheetx{width:34px;height:34px;border-radius:999px;background:var(--well);color:var(--ink-2);
-  display:grid;place-items:center;font-size:15px;line-height:1}
-.sheet h2{font-family:var(--fd);font-size:20px;font-weight:600;
-  font-variation-settings:'SOFT' 50,'WONK' 1;margin:0 0 4px}
-.sheet .sub{font-size:12.5px;color:var(--ink-3);margin:0 0 18px;line-height:1.55}
+.sheethead{position:sticky;top:0;z-index:2;display:flex;justify-content:flex-end;padding:4px 0 6px}
+.sheetx{width:34px;height:34px;border-radius:999px;background:var(--paper-2);border:1px solid var(--line);color:var(--ink-2);
+  display:grid;place-items:center;font-size:14px;line-height:1}
+.sheet h2{font-family:var(--fd);font-weight:400;font-size:28px;margin:0 0 4px}
+.sheet .sub{font-size:16px;font-style:italic;color:var(--ink-3);margin:0 0 16px;line-height:1.5}
 .altgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
 .altgrid button{display:block}
 .altgrid button[aria-pressed="true"] .cov{outline:3px solid var(--acc);outline-offset:2px}
-.setrow{display:flex;align-items:center;justify-content:space-between;gap:14px;
-  padding:14px 0;border-top:1px solid var(--line)}
+.setrow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-top:1px dashed var(--line)}
 .setrow:first-of-type{border-top:0}
-.setrow .k{font-size:14px;font-weight:700}
-.setrow .d{font-size:12px;color:var(--ink-3);margin-top:3px;line-height:1.5}
+.setrow .k{font-size:18px;font-weight:600}
+.setrow .d{font-size:14.5px;font-style:italic;color:var(--ink-3);margin-top:2px;line-height:1.45}
 .setrow .ctl{flex:none;display:flex;gap:6px;align-items:center}
-.mini{padding:8px 13px;border-radius:999px;background:var(--card);
-  border:1px solid var(--line);font-size:12.5px;font-weight:700}
+.mini{padding:6px 14px;border-radius:4px;font-size:15.5px;font-weight:600;background:var(--paper-2);border:1px solid var(--line);color:var(--ink)}
 .mini.danger{color:var(--bad);border-color:var(--bad)}
 .stepper{display:flex;align-items:center;gap:4px}
-.stepper button{width:32px;height:32px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-weight:700}
-.stepper b{min-width:36px;text-align:center;font-variant-numeric:tabular-nums}
-.sheet .seg{min-width:190px}
-.sheet .seg button{padding:7px 4px;font-size:12px}
+.stepper button{width:32px;height:32px;border-radius:999px;background:var(--paper-2);border:1px solid var(--line);font-weight:700}
+.stepper b{min-width:40px;text-align:center;font-variant-numeric:lining-nums}
+.sheet .seg{min-width:200px}
 
 .flash{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top) + 10px);
-  z-index:60;padding:11px 16px;border-radius:999px;background:var(--ink);color:var(--paper);
-  font-size:13px;font-weight:700;box-shadow:var(--shadow);opacity:0;pointer-events:none;
+  z-index:60;padding:9px 18px;border-radius:5px;color:var(--gold);font-size:16px;font-style:italic;
+  background:linear-gradient(180deg, #3a2414, #22140a);border:1px solid rgba(232,200,115,.4);
+  box-shadow:0 8px 18px -6px rgba(0,0,0,.8);opacity:0;pointer-events:none;
   transition:opacity .25s;max-width:88vw;text-align:center}
-.flash.bad{background:var(--bad);color:#fff}
+.flash.bad{color:#f3c2b6;border-color:rgba(215,122,108,.6)}
 .flash.on{opacity:1}
 
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
@@ -412,16 +458,16 @@ nav button[aria-selected="true"]{background:var(--card);color:var(--ink);box-sha
 <div id="app">
   <div class="bar" id="bar">
     <div id="barLeft">
-      <button class="count" id="countPill" aria-label="Books read">
+      <button class="count brass" id="countPill" aria-label="Books read">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-        <span id="countN">0</span>
+        <span id="countN" class="num">0</span>
       </button>
-      <button class="icobtn" id="backBtn" aria-label="Back" hidden>
+      <button class="icobtn brass" id="backBtn" aria-label="Back" hidden>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg>
       </button>
     </div>
     <div class="title" id="barTitle">Shelf</div>
-    <button class="icobtn" id="openSettings" aria-label="Settings">
+    <button class="icobtn brass" id="openSettings" aria-label="Settings">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"></circle><path d="M12 2.6v2.2M12 19.2v2.2M21.4 12h-2.2M4.8 12H2.6M18.6 5.4l-1.6 1.6M7 17l-1.6 1.6M18.6 18.6 17 17M7 7 5.4 5.4"></path></svg>
     </button>
   </div>
@@ -430,6 +476,9 @@ nav button[aria-selected="true"]{background:var(--card);color:var(--ink);box-sha
     <!-- ===================== SHELF ===================== -->
     <section class="view on" id="v-shelf"><div id="shelfBody"></div></section>
 
+    <!-- ===================== TO READ ===================== -->
+    <section class="view" id="v-want"><div id="wantBody"></div></section>
+
     <!-- ===================== FIND ===================== -->
     <section class="view" id="v-find">
       <div class="searchbox">
@@ -437,12 +486,16 @@ nav button[aria-selected="true"]{background:var(--card);color:var(--ink);box-sha
         <input id="q" type="search" placeholder="Title or author, Italian or English" enterkeyhint="search" autocomplete="off" autocorrect="off" spellcheck="false">
         <button class="qx" id="qClear" aria-label="Clear" hidden>✕</button>
       </div>
+      <div class="seg target" id="targetSeg">
+        <button data-t="read" aria-pressed="true">I finished it</button>
+        <button data-t="want" aria-pressed="false">I want to read it</button>
+      </div>
       <div class="findmeta" id="findMeta"></div>
       <div id="findBody"></div>
     </section>
 
     <!-- ===================== EDIT ===================== -->
-    <section class="view" id="v-edit"><div id="editBody" style="display:flex;flex-direction:column;flex:1"></div></section>
+    <section class="view" id="v-edit"><div id="editBody" class="page" style="display:flex;flex-direction:column;flex:1 0 auto;margin-bottom:4px"></div></section>
 
     <!-- ===================== BOOK ===================== -->
     <section class="view" id="v-book"><div id="bookBody"></div></section>
@@ -454,9 +507,9 @@ nav button[aria-selected="true"]{background:var(--card);color:var(--ink);box-sha
         <button data-scope="all" aria-selected="false">All time</button>
       </div>
       <div class="period" id="period">
-        <button id="prev" aria-label="Previous">‹</button>
-        <div class="label" id="periodLabel"></div>
-        <button id="next" aria-label="Next">›</button>
+        <button id="prev" class="brass" aria-label="Previous">‹</button>
+        <div class="label num" id="periodLabel"></div>
+        <button id="next" class="brass" aria-label="Next">›</button>
       </div>
       <div id="statsBody"></div>
     </section>
@@ -464,14 +517,15 @@ nav button[aria-selected="true"]{background:var(--card);color:var(--ink);box-sha
 
   <nav id="nav">
     <button data-view="shelf" aria-selected="true">Shelf</button>
+    <button data-view="want" aria-selected="false">To read</button>
     <button data-view="find" aria-selected="false">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Add</button>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Add</button>
     <button data-view="stats" aria-selected="false">Stats</button>
   </nav>
 </div>
 
 <div class="backdrop" id="backdrop"></div>
-<div class="sheet" id="sheet">
+<div class="sheet page" id="sheet">
   <div class="sheethead"><button class="sheetx" id="sheetClose" aria-label="Close">✕</button></div>
   <div id="sheetBody"></div>
 </div>
@@ -483,18 +537,20 @@ nav button[aria-selected="true"]{background:var(--card);color:var(--ink);box-sha
 'use strict';
 /* Bump BUILD together with CACHE in sw.js on every change: it is the only way
    to tell "the fix does not work" from "the phone still runs the old copy". */
-const BUILD = 1;
+const BUILD = 2;
 const STORE = 'shelf.v1';
 
 const WORDS = ['', 'Awful', 'Very bad', 'Bad', 'Weak', 'So-so', 'Decent', 'Good', 'Very good', 'Excellent', 'Masterpiece'];
 const FORMATS = {paper:'Paper', ebook:'E-book', audio:'Audiobook'};
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-/* placeholder covers: muted cloth colours that keep white text readable */
-const CLOTH = ['#5b6e5d','#7a4b3e','#41566e','#6d5a7c','#8a6a35','#3f6866','#7b4f5f','#55603a'];
+/* placeholder covers: leather bindings that keep gold tooling readable */
+const LEATHER = ['#5e1f1a','#23402e','#1f2e45','#5a3b1e','#3b2a3f','#2c2a24','#6b4a1f','#3f1d2a'];
 
 /* ==================================================================== DATA */
+/* One list for both shelves: a book is either read (the default, so old
+   backups need no migration) or status 'want', still waiting to be read. */
 function blank(){
-  return {books:[], prefs:{theme:'auto', layout:'grid', sort:'recent', goal:0}};
+  return {books:[], prefs:{theme:'auto', layout:'grid', sort:'recent', wantSort:'added', goal:0}};
 }
 let DB = blank();
 (function load(){
@@ -520,6 +576,10 @@ function save(allowEmpty){
   catch (e) { flash('Could not save: the phone storage is full', true); }
 }
 try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) {}
+
+const isWant = b => b.status === 'want';
+const readBooks = () => DB.books.filter(b => !isWant(b));
+const wantBooks = () => DB.books.filter(isWant);
 
 /* Covers live in IndexedDB as small jpeg data URLs: localStorage tops out
    around 5 MB, which is a few hundred covers at best. A book keeps its
@@ -573,6 +633,11 @@ function fmtDay(s){
   const d = parseDay(s);
   return d ? `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}` : '';
 }
+function fmtStamp(ms){
+  if (!ms) return '';
+  const d = new Date(ms);
+  return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+}
 function daysBetween(a, b){
   const x = parseDay(a), y = parseDay(b);
   if (!x || !y) return null;
@@ -587,18 +652,11 @@ const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '
 const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
 function hashStr(s){ let h = 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; }
 
-const isDark = () => document.documentElement.dataset.theme === 'dark' ||
-  (document.documentElement.dataset.theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
-/* iOS paints the strip above the page with theme-color and keeps it, so it has
-   to stay exactly the paper the page is using. Nothing is allowed to cover it. */
+/* Safari outside the Home Screen still tints its bars with theme-color */
 function syncStatusBar(){
-  const paper = (getComputedStyle(document.documentElement).getPropertyValue('--paper') || '').trim() || '#e9ede3';
-  const light = $('#themeColor'), dark = $('#themeColorDark');
-  if (dark) dark.remove();
-  if (light && light.getAttribute('content') !== paper){
-    light.removeAttribute('media');
-    light.setAttribute('content', paper);
-  }
+  const wood = (getComputedStyle(document.documentElement).getPropertyValue('--wood-deep') || '').trim() || '#2b190e';
+  const m = $('#themeColor');
+  if (m && m.getAttribute('content') !== wood) m.setAttribute('content', wood);
 }
 function applyTheme(){
   const t = DB.prefs.theme;
@@ -625,12 +683,12 @@ function fetchT(url, ms){
 }
 
 /* A cover is drawn, never just linked: either the stored jpeg, the remote
-   url, or a cloth-bound placeholder with the title set in Fraunces. */
+   url, or a leather binding with the title tooled in gold. */
 function coverSrc(b){ return COVERS[b.id] || b.coverData || b.coverUrl || ''; }
 function coverHTML(b, extra){
   const src = coverSrc(b);
-  const bg = CLOTH[hashStr((b.title || '') + authorsText(b)) % CLOTH.length];
-  const ph = `<div class="ph" style="background:${bg}"><b>${esc(b.title || 'Untitled')}</b><small>${esc(authorsText(b))}</small></div>`;
+  const bg = LEATHER[hashStr((b.title || '') + authorsText(b)) % LEATHER.length];
+  const ph = `<div class="ph" style="background-color:${bg}"><b>${esc(b.title || 'Untitled')}</b><small>${esc(authorsText(b))}</small></div>`;
   const img = src ? `<img src="${esc(src)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : '';
   return `<div class="cov">${ph}${img}${extra || ''}</div>`;
 }
@@ -654,8 +712,8 @@ async function shrinkCover(src){
 }
 
 /* ================================================================ MOTION */
-/* Same pace as EPFL Focus: what leaves fades out, the work happens while
-   nothing is visible, what arrives fades in. The tab bar stays instant. */
+/* What leaves fades out, the work happens while nothing is visible, what
+   arrives fades in. The tab bar stays instant: a tab is a place, not a step. */
 const CALM = matchMedia('(prefers-reduced-motion: reduce)');
 const outMs = () => CALM.matches ? 0 : 130;
 const inMs  = () => CALM.matches ? 0 : 260;
@@ -725,35 +783,47 @@ function holdToConfirm(el, ms, fn){
 }
 
 /* ================================================================= VIEWS */
+const TABS = ['shelf', 'want', 'stats'];
 let currentView = 'shelf';
+let lastTab = 'shelf';
 let backTo = 'shelf';           /* where the back arrow of book/edit leads */
 let openBook = null;            /* id shown in v-book */
+let addTarget = 'read';         /* where a book found in Add ends up */
 
 function show(v){
   currentView = v;
+  if (TABS.includes(v)) lastTab = v;
   syncStatusBar();
-  ['shelf','find','edit','book','stats'].forEach(k => $('#v-'+k).classList.toggle('on', k === v));
+  ['shelf','want','find','edit','book','stats'].forEach(k => $('#v-'+k).classList.toggle('on', k === v));
   const step = v === 'book' || v === 'edit';
   $('#nav').style.display = step ? 'none' : '';
   $('#countPill').hidden = step;
   $('#backBtn').hidden = !step;
-  $('#countN').textContent = DB.books.length;
+  $('#countN').textContent = readBooks().length;
   document.querySelectorAll('#nav button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === v)));
-  $('#barTitle').textContent = v === 'stats' ? 'Stats' : v === 'find' ? 'Add a book'
-    : v === 'edit' ? (draft && draft.id ? 'Edit' : 'New book') : v === 'book' ? '' : 'Shelf';
+  $('#barTitle').textContent = v === 'stats' ? 'Stats' : v === 'want' ? 'To read'
+    : v === 'find' ? (addTarget === 'want' ? 'Add to your list' : 'Add a book')
+    : v === 'edit' ? (draft && draft.finishing ? 'Finished' : draft && draft.id ? 'Edit' : 'New book')
+    : v === 'book' ? '' : 'Shelf';
   $('#v-' + v).scrollTop = 0;
   if (v === 'shelf') renderShelf();
+  if (v === 'want') renderWant();
   if (v === 'stats') renderStats();
   if (v === 'book') renderBook();
   if (v === 'find') renderFind();
+}
+function openFind(target){
+  addTarget = target;
+  show('find');
+  /* iOS only opens the keyboard for a focus() made inside the tap itself */
+  if (!$('#q').value) $('#q').focus();
 }
 
 $('#nav').addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b || moving) return;
-  show(b.dataset.view);
-  /* iOS only opens the keyboard for a focus() made inside the tap itself */
-  if (b.dataset.view === 'find' && !$('#q').value) $('#q').focus();
+  if (b.dataset.view === 'find') openFind(lastTab === 'want' ? 'want' : 'read');
+  else show(b.dataset.view);
 });
 tap($('#backBtn'), () => {
   if (currentView === 'edit' && draft && draft.id && DB.books.some(b => b.id === draft.id)){
@@ -763,10 +833,74 @@ tap($('#backBtn'), () => {
 });
 $('#countPill').onclick = () => { if (currentView !== 'shelf') show('shelf'); };
 
+/* ======================================================= SHELVES & LISTS */
+/* Books stand on planks, three to a row; each one is a touch narrower or
+   wider than the next, so a row reads as real books and not as a grid. */
+function standHTML(b){
+  const seal = !isWant(b) && b.rating ? `<span class="seal num">${b.rating}</span>` : '';
+  const w = 86 + hashStr(b.id || b.title || '') % 15;
+  return `<button class="spine" data-book="${esc(b.id)}" style="width:${w}%" aria-label="${esc(b.title)}">${coverHTML(b, seal)}</button>`;
+}
+function labelHTML(b){
+  return `<button class="lab" data-book="${esc(b.id)}" tabindex="-1"><span class="t">${esc(b.title)}</span><span class="a">${esc(authorsText(b))}</span></button>`;
+}
+function bayHTML(books, plate){
+  const rows = [];
+  for (let i = 0; i < books.length; i += 3) rows.push(books.slice(i, i + 3));
+  return `<div class="bay">${plate ? `<div class="plate"><span class="brass">${plate}</span></div>` : ''}${rows.map(r =>
+    `<div class="srow"><div class="books">${r.map(standHTML).join('')}</div><div class="plank"></div>
+     <div class="labels">${r.map(labelHTML).join('')}</div></div>`).join('')}</div>`;
+}
+function rowHTML(b){
+  const right = isWant(b) ? (b.pages ? `<span class="r num" style="font-size:18px;color:var(--ink-3)">${b.pages}<small> p.</small></span>` : '')
+    : `<span class="r num">${b.rating || '–'}<small>/10</small></span>`;
+  const when = isWant(b) ? (b.added ? 'Added ' + fmtStamp(b.added) : '') : fmtDay(b.finished);
+  return `<button class="row" data-book="${esc(b.id)}">${coverHTML(b)}
+    <span class="body"><div class="t">${esc(b.title)}</div><div class="a">${esc(authorsText(b))}</div>
+    <div class="d">${esc(when)}${!isWant(b) && b.pages ? ' · ' + b.pages + ' pages' : ''}</div></span>${right}</button>`;
+}
+/* groups: [[label, books]], label null for one ungrouped bay */
+function listHTML(groups){
+  if (DB.prefs.layout === 'grid')
+    return groups.map(([label, bs]) => bayHTML(bs, label != null ? `${label}<small>${plural(bs.length, 'book')}</small>` : '')).join('');
+  return `<div class="page rows">${groups.map(([label, bs]) =>
+    (label != null ? `<div class="yearh"><span class="num">${label}</span><small>${plural(bs.length, 'book')}</small></div>` : '') +
+    bs.map(rowHTML).join('')).join('')}</div>`;
+}
+function matchesFilter(b, q){
+  if (!q) return true;
+  const hay = norm([b.title, authorsText(b), (b.genres || []).join(' '), b.publisher, b.notes].join(' '));
+  return norm(q).split(' ').every(w => hay.includes(w));
+}
+const LIST_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"></path></svg>';
+const GRID_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3.5" width="4.5" height="17" rx="1"></rect><rect x="10" y="3.5" width="4.5" height="17" rx="1"></rect><path d="M16.5 4.6l3.6.9-3.4 15.2-3.3-.8"></path></svg>';
+function toolsHTML(id, q, placeholder){
+  return `<div class="tools">
+      <label class="filter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.6-3.6"></path></svg>
+        <input id="${id}" type="search" placeholder="${placeholder}" value="${esc(q)}" autocomplete="off"></label>
+      <button class="icobtn brass" data-layout aria-label="${DB.prefs.layout === 'grid' ? 'Show as list' : 'Show as shelves'}">${DB.prefs.layout === 'grid' ? LIST_ICON : GRID_ICON}</button>
+    </div>`;
+}
+function wireLayout(root, rerender){
+  root.querySelector('[data-layout]').onclick = () => {
+    DB.prefs.layout = DB.prefs.layout === 'grid' ? 'list' : 'grid'; save();
+    swap(root.querySelector('.listbox'), rerender);
+  };
+}
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-book]');
+  if (!t || moving) return;
+  backTo = currentView === 'book' ? backTo : currentView;
+  openBook = t.dataset.book;
+  t.classList.add('held');
+  setTimeout(() => t.classList.remove('held'), outMs() + 90);
+  go('book');
+});
+
 /* ================================================================= SHELF */
 let shelfFilter = '';
-function sortedBooks(){
-  const list = DB.books.slice();
+function sortedRead(){
+  const list = readBooks();
   const recent = (a, b) => (b.finished || '').localeCompare(a.finished || '') || (b.added || 0) - (a.added || 0);
   const s = DB.prefs.sort;
   if (s === 'rating') list.sort((a, b) => (b.rating || 0) - (a.rating || 0) || recent(a, b));
@@ -774,29 +908,13 @@ function sortedBooks(){
   else list.sort(recent);
   return list;
 }
-function matchesFilter(b, q){
-  if (!q) return true;
-  const hay = norm([b.title, authorsText(b), (b.genres || []).join(' '), b.publisher, b.notes].join(' '));
-  return norm(q).split(' ').every(w => hay.includes(w));
-}
-function tileHTML(b){
-  const badge = b.rating ? `<span class="badge${b.rating >= 9 ? ' top' : ''}">${b.rating}</span>` : '';
-  return `<button class="tile" data-book="${esc(b.id)}">${coverHTML(b, badge)}
-    <div class="t">${esc(b.title)}</div><div class="a">${esc(authorsText(b))}</div></button>`;
-}
-function rowHTML(b){
-  return `<button class="row" data-book="${esc(b.id)}">${coverHTML(b)}
-    <span class="body"><div class="t">${esc(b.title)}</div><div class="a">${esc(authorsText(b))}</div>
-    <div class="d">${esc(fmtDay(b.finished))}${b.pages ? ' · ' + b.pages + ' pages' : ''}</div></span>
-    <span class="r">${b.rating || '–'}<small>/10</small></span></button>`;
-}
 function renderShelf(){
   const body = $('#shelfBody');
-  const books = DB.books;
+  const books = readBooks();
   if (!books.length){
-    body.innerHTML = `<div class="empty">Nothing on the shelf yet.<br>Tap <b>Add</b>, search for the last book you finished,<br>give it a mark and it lands here.</div>
-      <button class="primary" id="firstAdd" style="margin-top:4px">Add your first book</button>`;
-    $('#firstAdd').onclick = () => { show('find'); $('#q').focus(); };
+    body.innerHTML = `<div class="empty">The shelves are empty.<br>Tap <b>Add</b>, find the last book you finished,<br>give it a mark and it takes its place here.</div>
+      <button class="primary" id="firstAdd">Add your first book</button>`;
+    $('#firstAdd').onclick = () => openFind('read');
     return;
   }
   const y = new Date().getFullYear();
@@ -804,33 +922,24 @@ function renderShelf(){
   const rated = books.filter(b => b.rating);
   const avg = rated.length ? (rated.reduce((s, b) => s + b.rating, 0) / rated.length).toFixed(1) : '–';
   const goal = DB.prefs.goal;
-  const goalHTML = goal ? `<div class="goal"><div class="gl"><span>${y} goal</span><b>${thisYear} / ${goal}</b></div>
+  const goalHTML = goal ? `<div class="goal"><div class="gl"><span>${y} goal</span><b class="num">${thisYear} / ${goal}</b></div>
       <div class="pbar"><i style="width:${Math.min(100, thisYear / goal * 100)}%"></i></div></div>` : '';
 
   body.innerHTML = `
-    <div class="hero"><span class="v">${books.length}</span><span class="u">${books.length === 1 ? 'book read' : 'books read'}</span></div>
-    <div class="herosub"><b>${thisYear}</b> in ${y} · average mark <b>${avg}</b></div>
+    <div class="hero"><span class="v num">${books.length}</span><span class="u">${books.length === 1 ? 'book read' : 'books read'}</span></div>
+    <div class="herosub"><b class="num">${thisYear}</b> in <span class="num">${y}</span> · average mark <b class="num">${avg}</b></div>
     ${goalHTML}
-    <div class="tools">
-      <label class="filter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.6-3.6"></path></svg>
-        <input id="shelfQ" type="search" placeholder="Filter your shelf" value="${esc(shelfFilter)}" autocomplete="off"></label>
-      <button class="icobtn" id="layoutBtn" aria-label="${DB.prefs.layout === 'grid' ? 'Show as list' : 'Show as grid'}">${DB.prefs.layout === 'grid'
-        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"></path></svg>'
-        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"></rect></svg>'}</button>
-    </div>
+    ${toolsHTML('shelfQ', shelfFilter, 'Search your shelves')}
     <div class="scope" id="sortScope">
       <button data-sort="recent" aria-selected="${DB.prefs.sort === 'recent'}">Recent</button>
       <button data-sort="rating" aria-selected="${DB.prefs.sort === 'rating'}">Top rated</button>
       <button data-sort="title" aria-selected="${DB.prefs.sort === 'title'}">A–Z</button>
     </div>
-    <div id="shelfList"></div>`;
+    <div class="listbox" id="shelfList"></div>`;
 
   const q = $('#shelfQ');
   q.oninput = () => { shelfFilter = q.value; renderShelfList(); };
-  $('#layoutBtn').onclick = () => {
-    DB.prefs.layout = DB.prefs.layout === 'grid' ? 'list' : 'grid'; save();
-    swap($('#shelfList'), () => { renderShelf(); });
-  };
+  wireLayout(body, renderShelf);
   $('#sortScope').onclick = e => {
     const b = e.target.closest('button');
     if (!b || b.dataset.sort === DB.prefs.sort) return;
@@ -842,25 +951,68 @@ function renderShelf(){
 }
 function renderShelfList(){
   const el = $('#shelfList');
-  const list = sortedBooks().filter(b => matchesFilter(b, shelfFilter));
+  const list = sortedRead().filter(b => matchesFilter(b, shelfFilter));
   if (!list.length){ el.innerHTML = `<div class="empty">No book matches “${esc(shelfFilter)}”.</div>`; return; }
-  const one = DB.prefs.layout === 'grid' ? tileHTML : rowHTML;
-  const wrap = items => DB.prefs.layout === 'grid' ? `<div class="grid">${items}</div>` : `<div class="rows">${items}</div>`;
-  if (DB.prefs.sort !== 'recent'){ el.innerHTML = wrap(list.map(one).join('')); return; }
+  if (DB.prefs.sort !== 'recent'){ el.innerHTML = listHTML([[null, list]]); return; }
   const groups = new Map();
   list.forEach(b => { const y = yearOf(b) || '—'; if (!groups.has(y)) groups.set(y, []); groups.get(y).push(b); });
-  el.innerHTML = [...groups].map(([y, bs]) =>
-    `<div class="yearh"><span>${y}</span><span>${plural(bs.length, 'book')}</span></div>${wrap(bs.map(one).join(''))}`).join('');
+  el.innerHTML = listHTML([...groups]);
 }
-document.addEventListener('click', e => {
-  const t = e.target.closest('[data-book]');
-  if (!t || moving) return;
-  backTo = currentView === 'book' ? backTo : currentView;
-  openBook = t.dataset.book;
-  t.classList.add('held');
-  setTimeout(() => t.classList.remove('held'), outMs() + 90);
-  go('book');
-});
+
+/* =============================================================== TO READ */
+let wantFilter = '';
+function sortedWant(){
+  const list = wantBooks();
+  const s = DB.prefs.wantSort;
+  if (s === 'title') list.sort((a, b) => norm(a.title).localeCompare(norm(b.title)));
+  else if (s === 'short') list.sort((a, b) => (a.pages || 1e6) - (b.pages || 1e6));
+  else list.sort((a, b) => (b.added || 0) - (a.added || 0));
+  return list;
+}
+function renderWant(){
+  const body = $('#wantBody');
+  const books = wantBooks();
+  if (!books.length){
+    body.innerHTML = `<div class="empty">Nothing waiting to be read.<br>Keep here the books you mean to read:<br>when you finish one, it moves to the <b>Shelf</b>.</div>
+      <button class="primary" id="firstWant">Add a book to read</button>`;
+    $('#firstWant').onclick = () => openFind('want');
+    return;
+  }
+  const pages = books.reduce((s, b) => s + (b.pages || 0), 0);
+  body.innerHTML = `
+    <div class="hero"><span class="v num">${books.length}</span><span class="u">${books.length === 1 ? 'book to read' : 'books to read'}</span></div>
+    <div class="herosub">${pages ? `about <b class="num">${pages.toLocaleString('en-GB')}</b> pages waiting` : '&nbsp;'}</div>
+    ${toolsHTML('wantQ', wantFilter, 'Search your list')}
+    <div class="scope" id="wantScope">
+      <button data-sort="added" aria-selected="${DB.prefs.wantSort === 'added'}">Newest</button>
+      <button data-sort="short" aria-selected="${DB.prefs.wantSort === 'short'}">Shortest</button>
+      <button data-sort="title" aria-selected="${DB.prefs.wantSort === 'title'}">A–Z</button>
+    </div>
+    <div class="listbox" id="wantList"></div>
+    <button class="onwood" id="pickOne">Can't choose? Let the shelf pick one</button>`;
+  const q = $('#wantQ');
+  q.oninput = () => { wantFilter = q.value; renderWantList(); };
+  wireLayout(body, renderWant);
+  $('#wantScope').onclick = e => {
+    const b = e.target.closest('button');
+    if (!b || b.dataset.sort === DB.prefs.wantSort) return;
+    DB.prefs.wantSort = b.dataset.sort; save();
+    document.querySelectorAll('#wantScope button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+    swap($('#wantList'), renderWantList);
+  };
+  tap($('#pickOne'), () => {
+    const all = wantBooks();
+    openBook = all[Math.floor(Math.random() * all.length)].id;
+    backTo = 'want';
+    go('book');
+  });
+  renderWantList();
+}
+function renderWantList(){
+  const el = $('#wantList');
+  const list = sortedWant().filter(b => matchesFilter(b, wantFilter));
+  el.innerHTML = list.length ? listHTML([[null, list]]) : `<div class="empty">No book matches “${esc(wantFilter)}”.</div>`;
+}
 
 /* ================================================================== FIND */
 /* Two catalogues answer every query in parallel. Apple Books (Italian and
@@ -960,45 +1112,53 @@ function runSearch(q){
 }
 
 function renderFind(){
-  const q = $('#q');
-  $('#qClear').hidden = !q.value;
+  $('#qClear').hidden = !$('#q').value;
+  document.querySelectorAll('#targetSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.t === addTarget)));
   paintFind();
 }
+$('#targetSeg').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  addTarget = b.dataset.t;
+  document.querySelectorAll('#targetSeg button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  $('#barTitle').textContent = addTarget === 'want' ? 'Add to your list' : 'Add a book';
+};
 function paintFind(){
   const body = $('#findBody'), meta = $('#findMeta');
-  const shelfKeys = new Set(DB.books.map(hitKey));
+  const mine = new Map(DB.books.map(b => [hitKey(b), b]));
+  const manual = label => `<button class="manual" id="manualBtn">${label}</button>`;
   if (findState === 'idle'){
     meta.innerHTML = '';
-    body.innerHTML = `<div class="tips">Type a <b>title</b>, an <b>author</b> or both — <i>il nome della rosa</i>, <i>murakami norwegian</i>.
-      Results come from Apple Books and Open Library, with cover, blurb and page count when they have them.</div>
-      <button class="manual" id="manualBtn">Not there? Add it by hand</button>`;
+    body.innerHTML = `<div class="page tips">Type a <b>title</b>, an <b>author</b> or both — <i>il nome della rosa</i>, <i>murakami norwegian</i>.
+      Results come from Apple Books and Open Library, with cover, blurb and page count when they have them.
+      ${manual('Not there? Add it by hand')}</div>`;
     tap($('#manualBtn'), () => startDraft(null));
     return;
   }
   if (findState === 'error' && !hits.length){
     meta.innerHTML = '';
-    body.innerHTML = `<div class="empty">No answer from the catalogues.<br>Check the connection, or add the book by hand.</div>
-      <button class="manual" id="manualBtn">Add it by hand</button>`;
+    body.innerHTML = `<div class="page tips">No answer from the catalogues. Check the connection, or add the book by hand.
+      ${manual('Add it by hand')}</div>`;
     tap($('#manualBtn'), () => startDraft({title: lastQuery}));
     return;
   }
   meta.innerHTML = findState === 'loading'
-    ? `<span><span class="spin"></span>Searching…</span><span>${hits.length ? plural(hits.length, 'result') : ''}</span>`
+    ? `<span><span class="spin"></span>Searching the catalogues…</span><span>${hits.length ? plural(hits.length, 'result') : ''}</span>`
     : `<span>${hits.length ? plural(hits.length, 'result') : 'Nothing found'}</span><span></span>`;
   if (!hits.length && findState === 'loading'){
-    body.innerHTML = '<div class="skel"><i></i><div><b></b><b></b><b></b></div></div>'.repeat(4);
+    body.innerHTML = `<div class="page hits">${'<div class="skel"><i></i><div><b></b><b></b><b></b></div></div>'.repeat(4)}</div>`;
     return;
   }
-  body.innerHTML = hits.map((h, i) => {
+  body.innerHTML = `<div class="page hits">${hits.map((h, i) => {
     const tags = [];
-    if (h.year) tags.push(`<span class="tag">${h.year}</span>`);
-    if (h.pages) tags.push(`<span class="tag">${h.pages} p.</span>`);
+    if (h.year) tags.push(`<span class="tag num">${h.year}</span>`);
+    if (h.pages) tags.push(`<span class="tag num">${h.pages} p.</span>`);
     if (h.genres && h.genres[0]) tags.push(`<span class="tag">${esc(h.genres[0])}</span>`);
-    if (shelfKeys.has(hitKey(h))) tags.push('<span class="tag acc">On your shelf</span>');
+    const own = mine.get(hitKey(h));
+    if (own) tags.push(`<span class="tag acc">${isWant(own) ? 'On your list' : 'On your shelf'}</span>`);
     return `<button class="hit" data-hit="${i}">${coverHTML({title: h.title, authors: h.authors, coverUrl: h.thumb})}
       <span class="body"><div class="t">${esc(h.title)}</div><div class="a">${esc(h.authors.join(', ') || 'Unknown author')}</div>
       <div class="m">${tags.join('')}</div></span></button>`;
-  }).join('') + `<button class="manual" id="manualBtn">Not the right one? Add it by hand</button>`;
+  }).join('')}${manual('Not the right one? Add it by hand')}</div>`;
   tap($('#manualBtn'), () => startDraft({title: lastQuery}));
 }
 $('#findBody').addEventListener('click', e => {
@@ -1027,7 +1187,7 @@ let draft = null;
 function startDraft(h){
   h = h || {};
   draft = {
-    id: null, title: h.title || '', authors: (h.authors || []).slice(),
+    id: null, status: addTarget, title: h.title || '', authors: (h.authors || []).slice(),
     year: h.year || '', pages: h.pages || '', publisher: h.publisher || '', isbn: h.isbn || '',
     genres: (h.genres || []).slice(), description: h.description || '',
     finished: todayISO(), started: '', rating: null, format: 'paper', notes: '', quote: '',
@@ -1039,8 +1199,14 @@ function startDraft(h){
   go('edit', () => { show('edit'); renderEdit(); });
   if (h.src) enrich(draft);
 }
-function editDraft(b){
+/* finish = a book from the list was just read: same form, now with a mark */
+function editDraft(b, finish){
   draft = Object.assign(JSON.parse(JSON.stringify(b)), {coverData: COVERS[b.id] || '', alts: [], touched: {}});
+  draft.status = isWant(b) ? 'want' : 'read';
+  if (finish){
+    Object.assign(draft, {status: 'read', finishing: true, finished: todayISO(), rating: null});
+    if (!draft.format) draft.format = 'paper';
+  }
   if (draft.coverUrl && !draft.alts.length) draft.alts.push({cover: draft.coverUrl, thumb: draft.coverUrl});
   go('edit', () => { show('edit'); renderEdit(); });
 }
@@ -1077,7 +1243,7 @@ function renderEdit(){
   const field = (k, label, attrs, val) =>
     `<div class="field"><label for="f-${k}">${label}</label><input id="f-${k}" data-k="${k}" value="${esc(val != null ? val : d[k])}" ${attrs || ''}></div>`;
   const area = (k, label, ph) =>
-    `<div class="field"><label for="f-${k}">${label}</label><textarea id="f-${k}" data-k="${k}" placeholder="${esc(ph || '')}">${esc(d[k])}</textarea></div>`;
+    `<div class="field"><label for="f-${k}" id="l-${k}">${label}</label><textarea id="f-${k}" data-k="${k}" placeholder="${esc(ph || '')}">${esc(d[k])}</textarea></div>`;
   $('#editBody').innerHTML = `
     <div class="covedit">
       <div id="covPrev"></div>
@@ -1086,25 +1252,29 @@ function renderEdit(){
         <button class="mini" id="covBtn">Change cover</button>
       </div>
     </div>
+    ${d.id ? '' : `<div class="field"><div class="seg" id="statusSeg">
+      <button data-s="read" aria-pressed="${d.status === 'read'}">I finished it</button>
+      <button data-s="want" aria-pressed="${d.status === 'want'}">I want to read it</button></div></div>`}
 
     ${field('title', 'Title', 'autocomplete="off"')}
     ${field('authors', 'Author <small>· comma between names</small>', 'autocomplete="off"', d.authors.join(', '))}
 
-    <div class="rate" id="rateBox">
-      <div class="top"><div class="num" id="rateNum"></div><div class="word" id="rateWord"></div></div>
-      <div class="segs" id="segs">${Array.from({length: 10}, (_, i) => `<button data-v="${i+1}">${i+1}</button>`).join('')}</div>
+    <div id="readFields">
+      <div class="rate" id="rateBox">
+        <div class="top"><div class="n num" id="rateNum"></div><div class="word" id="rateWord"></div></div>
+        <div class="segs" id="segs">${Array.from({length: 10}, (_, i) => `<button data-v="${i+1}">${i+1}</button>`).join('')}</div>
+      </div>
+      <div class="pair">
+        ${field('finished', 'Finished on', 'type="date"')}
+        ${field('started', 'Started <small>· optional</small>', 'type="date"')}
+      </div>
+      <div class="field"><span class="flabel">Read as</span>
+        <div class="seg" id="fmtSeg">${Object.entries(FORMATS).map(([k, v]) =>
+          `<button data-f="${k}" aria-pressed="${(d.format || 'paper') === k}">${v}</button>`).join('')}</div></div>
     </div>
 
-    <div class="pair">
-      ${field('finished', 'Finished on', 'type="date"')}
-      ${field('started', 'Started <small>· optional</small>', 'type="date"')}
-    </div>
-    <div class="field"><span class="flabel">Read as</span>
-      <div class="seg" id="fmtSeg">${Object.entries(FORMATS).map(([k, v]) =>
-        `<button data-f="${k}" aria-pressed="${d.format === k}">${v}</button>`).join('')}</div></div>
-
-    ${area('notes', 'Your notes', 'What stayed with you, who it is for, what you would say to a friend')}
-    ${area('quote', 'A line worth keeping', 'Optional')}
+    ${area('notes', '', '')}
+    <div id="quoteField">${area('quote', 'A line worth keeping', 'Optional')}</div>
 
     <details class="more"${d.id ? '' : ' open'}>
       <summary>About the book</summary>
@@ -1120,10 +1290,11 @@ function renderEdit(){
       ${area('description', 'Description', 'The blurb, from the catalogue or your own')}
     </details>
 
-    <div class="savebar"><button class="primary" id="saveBtn">${d.id ? 'Save changes' : 'Put it on the shelf'}</button></div>`;
+    <div class="savebar"><button class="primary" id="saveBtn"></button></div>`;
 
   paintCoverPreview();
   paintRate();
+  paintStatus();
   document.querySelectorAll('#editBody [data-k]').forEach(el => el.addEventListener('input', () => {
     const k = el.dataset.k;
     d.touched[k] = true;
@@ -1131,6 +1302,12 @@ function renderEdit(){
     el.closest('.field').classList.remove('bad');
     if (k === 'title' || k === 'authors') paintCoverPreview(true);
   }));
+  if ($('#statusSeg')) $('#statusSeg').onclick = e => {
+    const b = e.target.closest('button'); if (!b) return;
+    d.status = b.dataset.s;
+    document.querySelectorAll('#statusSeg button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    paintStatus();
+  };
   $('#fmtSeg').onclick = e => {
     const b = e.target.closest('button'); if (!b) return;
     d.format = b.dataset.f;
@@ -1148,6 +1325,17 @@ function renderEdit(){
   tap($('#covBtn'), openCoverSheet);
   tap($('#saveBtn'), saveDraft);
 }
+/* a book to read has no mark, no dates and no quote yet: only why you want it */
+function paintStatus(){
+  const d = draft, want = d.status === 'want';
+  $('#readFields').hidden = want;
+  $('#quoteField').hidden = want;
+  $('#l-notes').textContent = want ? 'Why this one' : 'Your notes';
+  $('#f-notes').placeholder = want ? 'Who suggested it, what caught your eye'
+    : 'What stayed with you, who it is for, what you would tell a friend';
+  $('#saveBtn').textContent = d.finishing ? 'Move it to the shelf' : d.id ? 'Save changes'
+    : want ? 'Add it to my list' : 'Put it on the shelf';
+}
 function paintCoverPreview(textOnly){
   const d = draft;
   if (!textOnly) $('#covPrev').innerHTML = coverHTML({title: d.title, authors: d.authors, coverData: d.coverData, coverUrl: d.coverUrl});
@@ -1158,7 +1346,7 @@ function paintCoverPreview(textOnly){
 function paintRate(changed){
   const d = draft;
   const n = $('#rateNum');
-  n.className = 'num' + (d.rating ? '' : ' none');
+  n.className = 'n num' + (d.rating ? '' : ' none');
   n.innerHTML = d.rating ? `${d.rating}<small>/10</small>` : `–<small>/10</small>`;
   $('#rateWord').textContent = d.rating ? WORDS[d.rating] : 'Your mark';
   document.querySelectorAll('#segs button').forEach(b => b.classList.toggle('on', +b.dataset.v <= (d.rating || 0)));
@@ -1175,7 +1363,7 @@ function openCoverSheet(){
       `<button data-alt="${i}" aria-pressed="${a.cover === d.coverUrl}">${coverHTML({title: d.title, authors: d.authors, coverUrl: a.thumb})}</button>`).join('')}</div>` : ''}
     <div class="setrow"><div><div class="k">Photo or image</div><div class="d">From the camera or the library. It is kept on this phone.</div></div>
       <div class="ctl"><button class="mini" id="photoBtn">Choose</button></div></div>
-    <div class="setrow"><div><div class="k">No cover</div><div class="d">A plain cloth binding with the title.</div></div>
+    <div class="setrow"><div><div class="k">No cover</div><div class="d">A leather binding with the title in gold.</div></div>
       <div class="ctl"><button class="mini danger" id="noCovBtn">Remove</button></div></div>`);
   $('#sheetBody').onclick = e => {
     const b = e.target.closest('[data-alt]'); if (!b) return;
@@ -1198,12 +1386,14 @@ $('#pickImage').addEventListener('change', async e => {
 });
 
 async function saveDraft(){
-  const d = draft;
+  const d = draft, want = d.status === 'want';
   d.title = d.title.trim();
   if (!d.title){ const f = $('#f-title').closest('.field'); f.classList.add('bad'); f.scrollIntoView({behavior:'smooth', block:'center'}); flash('The book needs a title', true); return; }
-  if (!d.rating){ $('#rateBox').classList.add('bad'); $('#rateBox').scrollIntoView({behavior:'smooth', block:'center'}); flash('Give it a mark from 1 to 10', true); return; }
-  if (!parseDay(d.finished)){ $('#f-finished').closest('.field').classList.add('bad'); flash('When did you finish it?', true); return; }
-  if (d.started && d.started > d.finished){ $('#f-started').closest('.field').classList.add('bad'); flash('It was started after it was finished', true); return; }
+  if (!want){
+    if (!d.rating){ $('#rateBox').classList.add('bad'); $('#rateBox').scrollIntoView({behavior:'smooth', block:'center'}); flash('Give it a mark from 1 to 10', true); return; }
+    if (!parseDay(d.finished)){ $('#f-finished').closest('.field').classList.add('bad'); flash('When did you finish it?', true); return; }
+    if (d.started && d.started > d.finished){ $('#f-started').closest('.field').classList.add('bad'); flash('It was started after it was finished', true); return; }
+  }
 
   const btn = $('#saveBtn');
   btn.disabled = true;
@@ -1214,9 +1404,9 @@ async function saveDraft(){
   const id = d.id || newId();
   const old = DB.books.find(b => b.id === id);
   const book = {
-    id, title: d.title, authors: d.authors.filter(Boolean),
-    finished: d.finished, started: d.started || '', rating: d.rating, format: d.format,
-    notes: (d.notes || '').trim(), quote: (d.quote || '').trim(),
+    id, status: want ? 'want' : 'read', title: d.title, authors: d.authors.filter(Boolean),
+    finished: want ? '' : d.finished, started: want ? '' : (d.started || ''), rating: want ? null : d.rating,
+    format: d.format || 'paper', notes: (d.notes || '').trim(), quote: want ? '' : (d.quote || '').trim(),
     year: +d.year || null, pages: +d.pages || null, publisher: (d.publisher || '').trim(),
     isbn: String(d.isbn || '').replace(/[^0-9Xx]/g, ''), genres: d.genres.filter(Boolean),
     description: (d.description || '').trim(), coverUrl: d.coverUrl || '',
@@ -1227,9 +1417,10 @@ async function saveDraft(){
   if (old) Object.assign(old, book); else DB.books.push(book);
   save();
   openBook = id;
-  backTo = 'shelf';
+  backTo = want ? 'want' : 'shelf';
   go('book');
-  flash(isNew ? `On the shelf · ${DB.books.length}` : 'Saved');
+  flash(d.finishing ? `Moved to the shelf · ${readBooks().length}`
+    : isNew ? (want ? `On your list · ${wantBooks().length}` : `On the shelf · ${readBooks().length}`) : 'Saved');
   if (isNew){ $('#q').value = ''; lastQuery = ''; hits = []; findState = 'idle'; }
 }
 
@@ -1237,41 +1428,49 @@ async function saveDraft(){
 function renderBook(){
   const b = DB.books.find(x => x.id === openBook);
   const body = $('#bookBody');
-  if (!b){ body.innerHTML = '<div class="empty">This book is no longer on the shelf.</div>'; return; }
-  const took = b.started ? daysBetween(b.started, b.finished) : null;
+  if (!b){ body.innerHTML = '<div class="empty">This book is no longer here.</div>'; return; }
+  const want = isWant(b);
+  const took = !want && b.started ? daysBetween(b.started, b.finished) : null;
   const facts = [
-    [fmtDay(b.finished), 'Finished'],
+    want ? (b.added ? [fmtStamp(b.added), 'On the list since'] : null) : [fmtDay(b.finished), 'Finished'],
     took ? [plural(took, 'day'), 'To read it'] : null,
     b.pages ? [b.pages, 'Pages'] : null,
     b.year ? [b.year, 'First published'] : null,
-    [FORMATS[b.format] || 'Paper', 'Read as'],
+    want ? null : [FORMATS[b.format] || 'Paper', 'Read as'],
     b.publisher ? [b.publisher, 'Publisher'] : null,
   ].filter(Boolean);
   const longDesc = (b.description || '').length > 420;
-  body.innerHTML = `
-    <div class="bhead">${coverHTML(b)}<h1>${esc(b.title)}</h1><div class="a">${esc(authorsText(b) || 'Unknown author')}</div></div>
-    <div class="score"><div class="num">${b.rating}<small>/10</small></div>
+  const blocks = [];
+  if (!want) blocks.push(`<div class="score"><div class="n num">${b.rating}<small>/10</small></div>
       <div class="side"><div class="w">${WORDS[b.rating] || ''}</div>
-      <div class="ticks">${Array.from({length: 10}, (_, i) => `<i class="${i < b.rating ? 'on' : ''}"></i>`).join('')}</div></div></div>
-    <div class="facts">${facts.map(([v, k]) => `<div class="fact"><div class="v">${esc(v)}</div><div class="k">${k}</div></div>`).join('')}</div>
-    ${b.notes ? `<div class="sec"><h3>Your notes</h3><div class="note">${esc(b.notes)}</div></div>` : ''}
-    ${b.quote ? `<div class="sec"><h3>A line worth keeping</h3><div class="quote">${esc(b.quote)}</div></div>` : ''}
-    ${b.description ? `<div class="sec"><h3>About the book</h3><div class="desc${longDesc ? ' clamp' : ''}" id="desc">${esc(b.description)}</div>
-      ${longDesc ? '<button class="link" id="descMore">Read more</button>' : ''}</div>` : ''}
-    ${(b.genres || []).length ? `<div class="sec"><h3>Genres</h3><div class="tags">${b.genres.map(g => `<span class="tag">${esc(g)}</span>`).join('')}</div></div>` : ''}
-    <div class="actions"><button class="ghost" id="editBtn">Edit</button>
+      <div class="ticks">${Array.from({length: 10}, (_, i) => `<i class="${i < b.rating ? 'on' : ''}"></i>`).join('')}</div></div></div>`);
+  if (facts.length) blocks.push(`<div class="facts">${facts.map(([v, k]) => `<div class="fact"><div class="v">${esc(v)}</div><div class="k">${k}</div></div>`).join('')}</div>`);
+  if (b.notes) blocks.push(`<div class="sec"><h3>${want ? 'Why this one' : 'Your notes'}</h3><div class="note">${esc(b.notes)}</div></div>`);
+  if (b.quote) blocks.push(`<div class="quote">${esc(b.quote)}</div>`);
+  if (b.description) blocks.push(`<div class="sec"><h3>About the book</h3><div class="desc${longDesc ? ' clamp' : ''}" id="desc">${esc(b.description)}</div>
+      ${longDesc ? '<button class="link" id="descMore">Read more</button>' : ''}</div>`);
+  if ((b.genres || []).length) blocks.push(`<div class="tags">${b.genres.map(g => `<span class="tag">${esc(g)}</span>`).join('')}</div>`);
+
+  body.innerHTML = `
+    <div class="bhead"><div class="stand">${coverHTML(b)}<div class="plank"></div></div>
+      <h1>${esc(b.title)}</h1><div class="a">${esc(authorsText(b) || 'Unknown author')}</div>
+      ${want ? '<span class="status brass">to read</span>' : ''}</div>
+    ${want ? '<div style="margin-top:20px"><button class="primary" id="finishBtn">I finished it</button></div>' : ''}
+    <div class="page bpage">${blocks.join('<div class="ornament">❦ ❦ ❦</div>')}</div>
+    <div class="actions"><button class="ghost brass" id="editBtn">Edit</button>
       <button class="hold" id="delBtn"><i></i><span>Hold to remove</span></button></div>
-    ${b.isbn ? `<div class="foot">ISBN ${esc(b.isbn)}</div>` : ''}`;
+    ${b.isbn ? `<div class="bfoot num">ISBN ${esc(b.isbn)}</div>` : ''}`;
   $('#barTitle').textContent = '';
   if (longDesc) $('#descMore').onclick = () => { $('#desc').classList.remove('clamp'); $('#descMore').remove(); };
+  if (want) tap($('#finishBtn'), () => editDraft(b, true));
   tap($('#editBtn'), () => editDraft(b));
   holdToConfirm($('#delBtn'), 1100, async () => {
     DB.books = DB.books.filter(x => x.id !== b.id);
     knownBooks = DB.books.length;
     save(true);
     await coverDel(b.id);
-    go('shelf');
-    flash('Removed from the shelf');
+    go(want ? 'want' : 'shelf');
+    flash(want ? 'Removed from your list' : 'Removed from the shelf');
   });
 }
 
@@ -1281,11 +1480,11 @@ let statScope = 'year', statYear = new Date().getFullYear(), statPick = null;
 function barChart(vals, labels, sel){
   const max = Math.max(1, ...vals);
   return `<div class="bars">${vals.map((v, i) =>
-    `<button data-bar="${i}" aria-pressed="${sel === i}" aria-label="${esc(labels[i])}: ${v}">${v ? `<em>${v}</em>` : ''}<i class="${v ? '' : 'zero'}" style="height:${v / max * 82}%"></i></button>`).join('')}</div>
+    `<button data-bar="${i}" aria-pressed="${sel === i}" aria-label="${esc(labels[i])}: ${v}">${v ? `<em>${v}</em>` : ''}<i class="${v ? '' : 'zero'}" style="height:${v / max * 80}%"></i></button>`).join('')}</div>
     <div class="axis">${labels.map(l => `<span>${esc(l)}</span>`).join('')}</div>`;
 }
 function renderStats(){
-  const all = DB.books.filter(b => yearOf(b));
+  const all = readBooks().filter(b => yearOf(b));
   const nowY = new Date().getFullYear();
   const minY = all.length ? Math.min(...all.map(yearOf)) : nowY;
   statYear = clamp(statYear, minY, nowY);
@@ -1297,7 +1496,7 @@ function renderStats(){
   const set = yearMode ? all.filter(b => yearOf(b) === statYear) : all;
   const body = $('#statsBody');
   if (!set.length){
-    body.innerHTML = `<div class="empty">${yearMode ? `No books finished in ${statYear}.` : 'The stats start with the first book.'}</div>`;
+    body.innerHTML = `<div class="empty">${yearMode ? `No books finished in ${statYear}.` : 'The ledger starts with the first book.'}</div>`;
     return;
   }
   const pages = set.reduce((s, b) => s + (b.pages || 0), 0);
@@ -1306,16 +1505,15 @@ function renderStats(){
   const spans = set.map(b => b.started ? daysBetween(b.started, b.finished) : null).filter(x => x > 0);
   const avgDays = spans.length ? Math.round(spans.reduce((s, x) => s + x, 0) / spans.length) : null;
 
-  let byLabels, byVals, byBooks;
+  let byLabels, byBooks;
   if (yearMode){
     byLabels = MONTHS.map(m => m[0]);
     byBooks = MONTHS.map((_, m) => set.filter(b => parseDay(b.finished).getMonth() === m));
   } else {
-    byLabels = []; for (let y = minY; y <= nowY; y++) byLabels.push(String(y).slice(2));
-    byLabels = byLabels.map(l => "'" + l);
+    byLabels = []; for (let y = minY; y <= nowY; y++) byLabels.push("'" + String(y).slice(2));
     byBooks = byLabels.map((_, i) => set.filter(b => yearOf(b) === minY + i));
   }
-  byVals = byBooks.map(x => x.length);
+  const byVals = byBooks.map(x => x.length);
   const dist = Array.from({length: 10}, (_, i) => set.filter(b => b.rating === i + 1).length);
 
   const authors = new Map();
@@ -1323,26 +1521,32 @@ function renderStats(){
   const topA = [...authors].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 5);
   const maxA = topA.length ? topA[0][1] : 1;
   const fmts = Object.keys(FORMATS).map(k => [FORMATS[k], set.filter(b => (b.format || 'paper') === k).length]).filter(x => x[1]);
-  const best = set.slice().sort((a, b) => b.rating - a.rating || (b.finished || '').localeCompare(a.finished || '')).slice(0, 3);
+  const best = set.slice().sort((a, b) => (b.rating || 0) - (a.rating || 0) || (b.finished || '').localeCompare(a.finished || '')).slice(0, 3);
   const goal = yearMode && statYear === nowY && DB.prefs.goal;
 
   body.innerHTML = `
-    <div class="hero"><span class="v">${set.length}</span><span class="u">${set.length === 1 ? 'book' : 'books'}${goal ? ` of ${goal}` : ''}</span></div>
+    <div class="hero"><span class="v num">${set.length}</span><span class="u">${set.length === 1 ? 'book' : 'books'}${goal ? ` of ${goal}` : ''}</span></div>
     ${goal ? `<div class="goal"><div class="pbar"><i style="width:${Math.min(100, set.length / goal * 100)}%"></i></div></div>` : ''}
     <div class="kpis">
-      <div class="kpi"><div class="v">${pages ? pages.toLocaleString('en-GB') : '–'}</div><div class="k">pages</div></div>
-      <div class="kpi"><div class="v">${avg}</div><div class="k">average mark</div></div>
-      <div class="kpi"><div class="v">${avgDays || '–'}</div><div class="k">days per book</div></div>
+      <div class="kpi page"><div class="v num">${pages ? pages.toLocaleString('en-GB') : '–'}</div><div class="k">pages</div></div>
+      <div class="kpi page"><div class="v num">${avg}</div><div class="k">average mark</div></div>
+      <div class="kpi page"><div class="v num">${avgDays || '–'}</div><div class="k">days a book</div></div>
     </div>
-    <div class="chart"><div class="cap"><span class="t">${yearMode ? 'Books per month' : 'Books per year'}</span><span class="m">tap a bar</span></div>
-      <div id="byChart">${barChart(byVals, byLabels, statPick)}</div><div id="readbox"></div></div>
-    <div class="chart"><div class="cap"><span class="t">Marks</span><span class="m">1 → 10</span></div>
-      ${barChart(dist, dist.map((_, i) => String(i + 1)), null)}</div>
-    <div class="split"><h3>${yearMode ? `Best of ${statYear}` : 'Best ever'}</h3><div class="best">${best.map(tileHTML).join('')}</div></div>
-    ${topA.length ? `<div class="split"><h3>Authors</h3>${topA.map(([a, n]) =>
-      `<div class="srow"><span class="n">${esc(a)}</span><span class="track2"><i style="width:${n / maxA * 100}%"></i></span><span class="v">${n}</span></div>`).join('')}</div>` : ''}
-    ${fmts.length > 1 ? `<div class="split"><h3>Read as</h3>${fmts.map(([k, n]) =>
-      `<div class="srow"><span class="n">${k}</span><span class="track2"><i style="width:${n / set.length * 100}%"></i></span><span class="v">${n}</span></div>`).join('')}</div>` : ''}`;
+    <div class="page">
+      <div class="chart"><div class="cap"><span class="t">${yearMode ? 'Books per month' : 'Books per year'}</span><span class="m">tap a bar</span></div>
+        <div id="byChart">${barChart(byVals, byLabels, statPick)}</div><div id="readbox"></div></div>
+      <div class="ornament">❦</div>
+      <div class="chart" style="margin-bottom:0"><div class="cap"><span class="t">Marks</span><span class="m">1 → 10</span></div>
+        ${barChart(dist, dist.map((_, i) => String(i + 1)), null)}</div>
+    </div>
+    <div class="gap"></div>
+    ${bayHTML(best, yearMode ? `Best of ${statYear}` : 'Best ever')}
+    ${topA.length || fmts.length > 1 ? `<div class="page split">
+      ${topA.length ? `<h3>Authors</h3>${topA.map(([a, n]) =>
+        `<div class="srow2"><span class="n">${esc(a)}</span><span class="track2"><i style="width:${n / maxA * 100}%"></i></span><span class="v">${n}</span></div>`).join('')}` : ''}
+      ${fmts.length > 1 ? `<div class="ornament">❦</div><h3>Read as</h3>${fmts.map(([k, n]) =>
+        `<div class="srow2"><span class="n">${k}</span><span class="track2"><i style="width:${n / set.length * 100}%"></i></span><span class="v">${n}</span></div>`).join('')}` : ''}
+    </div>` : ''}`;
 
   const showPick = () => {
     const box = $('#readbox');
@@ -1389,9 +1593,9 @@ $('#sheetClose').onclick = closeSheet;
 function renderSettings(){
   const p = DB.prefs;
   openSheet(`<h2>Settings</h2>
-    <p class="sub">Everything stays on this phone. Make a backup now and then: deleting the website data, or the app from the Home Screen, deletes the shelf too.</p>
-    <div class="setrow"><div><div class="k">Theme</div></div>
-      <div class="ctl"><div class="seg" id="themeSeg">${[['auto','Auto'],['light','Light'],['dark','Dark']].map(([k, v]) =>
+    <p class="sub">Everything stays on this phone. Make a backup now and then: deleting the website data, or the app from the Home Screen, deletes the library too.</p>
+    <div class="setrow"><div><div class="k">Light</div></div>
+      <div class="ctl"><div class="seg" id="themeSeg">${[['auto','Auto'],['light','Day'],['dark','Candle']].map(([k, v]) =>
         `<button data-t="${k}" aria-pressed="${p.theme === k}">${v}</button>`).join('')}</div></div></div>
     <div class="setrow"><div><div class="k">Yearly goal</div><div class="d">Books to finish in ${new Date().getFullYear()}. Zero hides it.</div></div>
       <div class="ctl stepper"><button id="goalM" aria-label="Less">−</button><b id="goalV">${p.goal || 'Off'}</b><button id="goalP" aria-label="More">+</button></div></div>
@@ -1399,7 +1603,7 @@ function renderSettings(){
       <div class="ctl"><button class="mini" id="expBtn">Export</button></div></div>
     <div class="setrow"><div><div class="k">Restore</div><div class="d">Adds the books from a backup file. Books already here are kept.</div></div>
       <div class="ctl"><button class="mini" id="impBtn">Import</button></div></div>
-    <div class="foot">Shelf · build ${BUILD} · ${plural(DB.books.length, 'book')}<br>Book data from Apple Books and Open Library</div>`);
+    <div class="foot">Shelf · build ${BUILD} · ${readBooks().length} read · ${wantBooks().length} to read<br>Book data from Apple Books and Open Library</div>`);
   $('#themeSeg').onclick = e => {
     const b = e.target.closest('button'); if (!b) return;
     p.theme = b.dataset.t; save(); applyTheme();
@@ -1452,7 +1656,11 @@ $('#pickBackup').addEventListener('change', async e => {
 /* ================================================================= START */
 applyTheme();
 show('shelf');
-coversLoad().then(() => { if (currentView === 'shelf') renderShelf(); else if (currentView === 'book') renderBook(); });
+coversLoad().then(() => {
+  if (currentView === 'shelf') renderShelf();
+  else if (currentView === 'want') renderWant();
+  else if (currentView === 'book') renderBook();
+});
 
 if ('serviceWorker' in navigator){
   let reloading = false;

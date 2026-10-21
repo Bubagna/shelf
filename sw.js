@@ -2,13 +2,15 @@
    Bump CACHE (and BUILD in index.html) on every file change, otherwise the
    phone keeps serving the old version. Catalogue searches and cover images
    go straight to the network: covers are stored by the page itself. */
-const CACHE = 'shelf-v1';
+const CACHE = 'shelf-v2';
 const ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './fonts/fraunces-latin.woff2',
-  './fonts/karla-latin.woff2',
+  './fonts/garamond-latin.woff2',
+  './fonts/garamond-italic-latin.woff2',
+  './fonts/fell-latin.woff2',
+  './fonts/fell-italic-latin.woff2',
   './icons/icon-180.png',
   './icons/icon-512.png',
 ];

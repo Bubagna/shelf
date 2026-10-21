@@ -1,7 +1,11 @@
 # Shelf
 
 Every book you finished, on your phone: cover, the day you finished it, a mark from 1 to 10,
-your notes and a line worth keeping.
+your notes and a line worth keeping. A second list, **To read**, keeps the books you mean to read;
+when you finish one, a tap moves it to the shelf.
+
+It looks like an old wooden library: walnut boards, books standing on planks, a wax seal with the
+mark, parchment pages for the details. A darker *candle* light follows the phone's dark mode.
 
 Type a title or an author, in Italian or English, and Shelf finds the book: cover, blurb,
 first-edition year and page count are filled in for you. Tap it, give it a mark, done.
@@ -32,6 +36,6 @@ Import merges a file back in.
 
 ## Hacking on it
 
-One file, no dependencies, no build step: `index.html`. Same look and the same motion helpers as
-[EPFL Focus](https://github.com/Bubagna/epfl-focus). Bump `CACHE` in `sw.js` and `BUILD` in
+One file, no dependencies, no build step: `index.html`. Fonts (IM Fell English, EB Garamond) are
+bundled in `fonts/`; the wood grain is SVG noise drawn by the browser, so there are no image assets. Bump `CACHE` in `sw.js` and `BUILD` in
 `index.html` whenever a file changes, or phones keep the old copy.
