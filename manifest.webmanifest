@@ -1,0 +1,17 @@
+{
+  "name": "Shelf",
+  "short_name": "Shelf",
+  "description": "Every book you finished: cover, date, a mark from 1 to 10 and your notes.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#e9ede3",
+  "theme_color": "#e9ede3",
+  "lang": "en",
+  "icons": [
+    {"src": "icons/icon-180.png", "sizes": "180x180", "type": "image/png"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
