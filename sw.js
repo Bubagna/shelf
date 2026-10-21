@@ -2,7 +2,7 @@
    Bump CACHE (and BUILD in index.html) on every file change, otherwise the
    phone keeps serving the old version. Catalogue searches and cover images
    go straight to the network: covers are stored by the page itself. */
-const CACHE = 'shelf-v2';
+const CACHE = 'shelf-v3';
 const ASSETS = [
   './',
   './index.html',

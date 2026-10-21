@@ -1,3 +1,4 @@
 # project notes stay local: they describe Luigi's own folders and workflow
 CLAUDE.md
 .DS_Store
+.import/

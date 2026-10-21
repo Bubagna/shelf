@@ -537,7 +537,7 @@ nav button[aria-selected="true"]{background:linear-gradient(180deg, var(--brass-
 'use strict';
 /* Bump BUILD together with CACHE in sw.js on every change: it is the only way
    to tell "the fix does not work" from "the phone still runs the old copy". */
-const BUILD = 2;
+const BUILD = 3;
 const STORE = 'shelf.v1';
 
 const WORDS = ['', 'Awful', 'Very bad', 'Bad', 'Weak', 'So-so', 'Decent', 'Good', 'Very good', 'Excellent', 'Masterpiece'];
@@ -645,6 +645,8 @@ function daysBetween(a, b){
                      Date.UTC(x.getFullYear(), x.getMonth(), x.getDate())) / 86400000) + 1;
 }
 const yearOf = b => +(b.finished || '').slice(0, 4) || null;
+/* approx: only the year is known; the stored day just keeps the list order */
+const fmtFinished = b => b.approx ? String(yearOf(b) || '') : fmtDay(b.finished);
 const authorsText = b => (b.authors || []).join(', ');
 const lastName = a => (a || '').trim().split(/\s+/).pop() || '';
 const norm = s => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
@@ -854,7 +856,7 @@ function bayHTML(books, plate){
 function rowHTML(b){
   const right = isWant(b) ? (b.pages ? `<span class="r num" style="font-size:18px;color:var(--ink-3)">${b.pages}<small> p.</small></span>` : '')
     : `<span class="r num">${b.rating || '–'}<small>/10</small></span>`;
-  const when = isWant(b) ? (b.added ? 'Added ' + fmtStamp(b.added) : '') : fmtDay(b.finished);
+  const when = isWant(b) ? (b.added ? 'Added ' + fmtStamp(b.added) : '') : fmtFinished(b);
   return `<button class="row" data-book="${esc(b.id)}">${coverHTML(b)}
     <span class="body"><div class="t">${esc(b.title)}</div><div class="a">${esc(authorsText(b))}</div>
     <div class="d">${esc(when)}${!isWant(b) && b.pages ? ' · ' + b.pages + ' pages' : ''}</div></span>${right}</button>`;
@@ -1203,8 +1205,10 @@ function startDraft(h){
 function editDraft(b, finish){
   draft = Object.assign(JSON.parse(JSON.stringify(b)), {coverData: COVERS[b.id] || '', alts: [], touched: {}});
   draft.status = isWant(b) ? 'want' : 'read';
+  /* old entries without a mark can be edited without being forced to give one */
+  draft.unrated = !isWant(b) && !b.rating;
   if (finish){
-    Object.assign(draft, {status: 'read', finishing: true, finished: todayISO(), rating: null});
+    Object.assign(draft, {status: 'read', finishing: true, finished: todayISO(), rating: null, unrated: false, approx: false});
     if (!draft.format) draft.format = 'paper';
   }
   if (draft.coverUrl && !draft.alts.length) draft.alts.push({cover: draft.coverUrl, thumb: draft.coverUrl});
@@ -1265,7 +1269,7 @@ function renderEdit(){
         <div class="segs" id="segs">${Array.from({length: 10}, (_, i) => `<button data-v="${i+1}">${i+1}</button>`).join('')}</div>
       </div>
       <div class="pair">
-        ${field('finished', 'Finished on', 'type="date"')}
+        ${field('finished', d.approx ? 'Finished <small>· day unknown</small>' : 'Finished on', 'type="date"')}
         ${field('started', 'Started <small>· optional</small>', 'type="date"')}
       </div>
       <div class="field"><span class="flabel">Read as</span>
@@ -1390,7 +1394,7 @@ async function saveDraft(){
   d.title = d.title.trim();
   if (!d.title){ const f = $('#f-title').closest('.field'); f.classList.add('bad'); f.scrollIntoView({behavior:'smooth', block:'center'}); flash('The book needs a title', true); return; }
   if (!want){
-    if (!d.rating){ $('#rateBox').classList.add('bad'); $('#rateBox').scrollIntoView({behavior:'smooth', block:'center'}); flash('Give it a mark from 1 to 10', true); return; }
+    if (!d.rating && !d.unrated){ $('#rateBox').classList.add('bad'); $('#rateBox').scrollIntoView({behavior:'smooth', block:'center'}); flash('Give it a mark from 1 to 10', true); return; }
     if (!parseDay(d.finished)){ $('#f-finished').closest('.field').classList.add('bad'); flash('When did you finish it?', true); return; }
     if (d.started && d.started > d.finished){ $('#f-started').closest('.field').classList.add('bad'); flash('It was started after it was finished', true); return; }
   }
@@ -1412,6 +1416,7 @@ async function saveDraft(){
     description: (d.description || '').trim(), coverUrl: d.coverUrl || '',
     added: old ? old.added : Date.now(), edited: Date.now(),
   };
+  if (!want && d.approx && !d.touched.finished) book.approx = true;
   if (d.coverData) await coverPut(id, d.coverData);
   else if (!d.coverUrl) await coverDel(id);
   if (old) Object.assign(old, book); else DB.books.push(book);
@@ -1432,7 +1437,7 @@ function renderBook(){
   const want = isWant(b);
   const took = !want && b.started ? daysBetween(b.started, b.finished) : null;
   const facts = [
-    want ? (b.added ? [fmtStamp(b.added), 'On the list since'] : null) : [fmtDay(b.finished), 'Finished'],
+    want ? (b.added ? [fmtStamp(b.added), 'On the list since'] : null) : [fmtFinished(b), b.approx ? 'Finished, day unknown' : 'Finished'],
     took ? [plural(took, 'day'), 'To read it'] : null,
     b.pages ? [b.pages, 'Pages'] : null,
     b.year ? [b.year, 'First published'] : null,
@@ -1441,7 +1446,7 @@ function renderBook(){
   ].filter(Boolean);
   const longDesc = (b.description || '').length > 420;
   const blocks = [];
-  if (!want) blocks.push(`<div class="score"><div class="n num">${b.rating}<small>/10</small></div>
+  if (!want && b.rating) blocks.push(`<div class="score"><div class="n num">${b.rating}<small>/10</small></div>
       <div class="side"><div class="w">${WORDS[b.rating] || ''}</div>
       <div class="ticks">${Array.from({length: 10}, (_, i) => `<i class="${i < b.rating ? 'on' : ''}"></i>`).join('')}</div></div></div>`);
   if (facts.length) blocks.push(`<div class="facts">${facts.map(([v, k]) => `<div class="fact"><div class="v">${esc(v)}</div><div class="k">${k}</div></div>`).join('')}</div>`);
@@ -1508,7 +1513,7 @@ function renderStats(){
   let byLabels, byBooks;
   if (yearMode){
     byLabels = MONTHS.map(m => m[0]);
-    byBooks = MONTHS.map((_, m) => set.filter(b => parseDay(b.finished).getMonth() === m));
+    byBooks = MONTHS.map((_, m) => set.filter(b => !b.approx && parseDay(b.finished).getMonth() === m));
   } else {
     byLabels = []; for (let y = minY; y <= nowY; y++) byLabels.push("'" + String(y).slice(2));
     byBooks = byLabels.map((_, i) => set.filter(b => yearOf(b) === minY + i));
@@ -1523,6 +1528,7 @@ function renderStats(){
   const fmts = Object.keys(FORMATS).map(k => [FORMATS[k], set.filter(b => (b.format || 'paper') === k).length]).filter(x => x[1]);
   const best = set.slice().sort((a, b) => (b.rating || 0) - (a.rating || 0) || (b.finished || '').localeCompare(a.finished || '')).slice(0, 3);
   const goal = yearMode && statYear === nowY && DB.prefs.goal;
+  const undated = yearMode ? set.filter(b => b.approx).length : 0;
 
   body.innerHTML = `
     <div class="hero"><span class="v num">${set.length}</span><span class="u">${set.length === 1 ? 'book' : 'books'}${goal ? ` of ${goal}` : ''}</span></div>
@@ -1533,11 +1539,11 @@ function renderStats(){
       <div class="kpi page"><div class="v num">${avgDays || '–'}</div><div class="k">days a book</div></div>
     </div>
     <div class="page">
-      <div class="chart"><div class="cap"><span class="t">${yearMode ? 'Books per month' : 'Books per year'}</span><span class="m">tap a bar</span></div>
+      <div class="chart"><div class="cap"><span class="t">${yearMode ? 'Books per month' : 'Books per year'}</span><span class="m">${undated ? `+ ${undated} with no date` : 'tap a bar'}</span></div>
         <div id="byChart">${barChart(byVals, byLabels, statPick)}</div><div id="readbox"></div></div>
-      <div class="ornament">❦</div>
+      ${rated.length ? `<div class="ornament">❦</div>
       <div class="chart" style="margin-bottom:0"><div class="cap"><span class="t">Marks</span><span class="m">1 → 10</span></div>
-        ${barChart(dist, dist.map((_, i) => String(i + 1)), null)}</div>
+        ${barChart(dist, dist.map((_, i) => String(i + 1)), null)}</div>` : ''}
     </div>
     <div class="gap"></div>
     ${bayHTML(best, yearMode ? `Best of ${statYear}` : 'Best ever')}
